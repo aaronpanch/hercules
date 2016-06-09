@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/aaronpanch/hercules/issues"
   },
-  "homepage": "https://github.com/aaronpanch/hercules"
+  "homepage": "https://github.com/aaronpanch/hercules",
+  "dependencies": {
+    "hapi": "^13.4.1"
+  }
 }
