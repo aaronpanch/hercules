@@ -5,12 +5,11 @@ const Hapi = require('hapi');
 const server = new Hapi.Server();
 server.connection({ port: 3000 });
 
+const helloWorld = require('./src/handlers/helloWorld');
 server.route({
   method: 'GET',
   path: '/',
-  handler: function (request, reply) {
-    reply('Hello, world!');
-  }
+  handler: helloWorld
 });
 
 server.start((err) => {
