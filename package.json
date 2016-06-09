@@ -4,7 +4,7 @@
   "description": "Deploy applications with strength!",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --reporter spec 'test/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/aaronpanch/hercules/issues"
   },
-  "homepage": "https://github.com/aaronpanch/hercules"
+  "homepage": "https://github.com/aaronpanch/hercules",
+  "dependencies": {
+    "hapi": "^13.4.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
 }
