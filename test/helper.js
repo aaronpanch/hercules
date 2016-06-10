@@ -7,7 +7,7 @@ global.expect = require('chai').expect;
 
 // connect to database
 before(() => {
-  return MongoClient.connect(config.mongodbURI + config.mongodbName)
+  return MongoClient.connect(config.mongodbURI)
     .then((database) => {
       global.DB = database;
     })
