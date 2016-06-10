@@ -20,9 +20,11 @@ server.register(
   (err) => {
     server.route({
       method: 'GET',
-      path: '/',
-      handler: (request, reply) => {
-        reply.file('./public/index.html');
+      path: '/{param*}',
+      handler: {
+        directory: {
+          path: 'public'
+        }
       }
     })
 

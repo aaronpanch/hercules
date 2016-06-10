@@ -7,6 +7,7 @@
     "node": "6.2.0"
   },
   "scripts": {
+    "dev": "webpack --progress --color --watch & nodemon server.js",
     "test": "NODE_ENV=test mocha --reporter spec 'test/**/*.js'"
   },
   "repository": {
@@ -23,11 +24,20 @@
     "co": "^4.6.0",
     "hapi": "^13.4.1",
     "inert": "^4.0.0",
-    "mongodb": "^2.1.18"
+    "mongodb": "^2.1.18",
+    "normalize.css": "^4.1.1"
   },
   "devDependencies": {
+    "browser-sync": "^2.13.0",
+    "browser-sync-webpack-plugin": "^1.0.3",
     "chai": "^3.5.0",
+    "css-loader": "^0.23.1",
     "lodash": "^4.13.1",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "node-sass": "^3.7.0",
+    "nodemon": "^1.9.2",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1"
   }
 }
