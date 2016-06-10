@@ -1,5 +1,17 @@
-@import "base";
+.app {
+  background: #fff;
+  border-radius: 5px;
+  padding: 2rem;
+}
 
-@import "site";
-@import "spinner";
+.app__name {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 1rem 0;
+}
 
+.app__desc {
+  color: #555;
+  font-size: 14px;
+  margin: 0;
+}

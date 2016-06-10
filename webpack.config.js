@@ -1,5 +1,3 @@
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-
 module.exports = {
   entry: './client/index.js',
   output: {
@@ -15,12 +13,12 @@ module.exports = {
       {
         test: /\.scss$/,
         loaders: ['style', 'css', 'sass']
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
       }
     ]
-  },
-  plugins: [
-    new BrowserSyncPlugin({
-      proxy: 'localhost:3000'
-    })
-  ]
+  }
 }
