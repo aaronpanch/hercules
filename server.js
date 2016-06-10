@@ -11,7 +11,7 @@ server.register(
     {
       register: require('./src/mongodbPlugin'),
       options: {
-        dbURI: config.mongodbURI + config.mongodbName
+        dbURI: config.mongodbURI
       }
     },
     require('./src/appsPlugin')
