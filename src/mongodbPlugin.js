@@ -1,20 +1,24 @@
+'use strict';
+
 const MongoClient = require('mongodb').MongoClient
-    , co = require('co');
 
 const mongodbPlugin = {
   register: function (server, options, next) {
-    co(function*() {
-      let database = yield MongoClient.connect(options.dbURI);
-      console.log("Connected successfully to MongoDB!");
+    MongoClient.connect(options.dbURI)
+      .then((database) => {
+        console.log("Connected successfully to MongoDB!");
 
-      server.app.database = database;
+        server.expose('db', database)
 
-      server.on('stop', () => {
-        database.close();
+        server.on('stop', () => {
+          database.close();
+        });
+
+        next();
+      })
+      .catch((err) => {
+        next(err);
       });
-    });
-
-    next();
   }
 }
 

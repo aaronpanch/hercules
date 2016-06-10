@@ -6,24 +6,29 @@ const Hapi = require('hapi');
 const server = new Hapi.Server();
 server.connection({ port: config.port });
 
-server.register([
-    require('./src/appsPlugin'),
+server.register(
+  [
     {
       register: require('./src/mongodbPlugin'),
       options: {
-        dbURI: `${config.mongodbURI}hercules`
+        dbURI: config.mongodbURI + config.mongodbName
       }
+    },
+    require('./src/appsPlugin')
+  ],
+  (err) => {
+    if (err) {
+      console.error('Failed to load plugin: ', err);
     }
-  ], (err) => {
-  if (err) { console.error('Failed to load plugin: ', err); }
-});
 
-server.start((err) => {
-  if (err) {
-    throw err;
+    server.start((err) => {
+      if (err) {
+        throw err;
+      }
+
+      console.log('Server running at:', server.info.uri);
+    });
   }
-
-  console.log('Server running at:', server.info.uri);
-});
+);
 
 module.exports = server;

@@ -1,17 +1,25 @@
 'use strict';
 
-const expect = require('chai').expect;
-let server = require('../server');
+require('./helper');
+
+const server = require('../server')
+    , co = require('co');
 
 describe('Apps Plugin', () => {
-  it('should return a 200 for GET /', (done) => {
-    server.inject({ method: 'GET', url: '/' }, (res) => {
-      expect(res.statusCode).to.equal(200);
-      expect(res.result).to.eql({
-        msg: 'Hello World!'
-      });
+  it('should return a 200 for GET /apps', (done) => {
+    co(function*() {
+      yield DB.collection('apps').insertOne({ name: 'cool' });
 
-      done();
+      server.inject({ method: 'GET', url: '/apps' }, (res) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.result).to.eql({
+          apps: [
+            { name: 'cool' }
+          ]
+        });
+
+        done();
+      });
     });
   });
 });
