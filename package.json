@@ -7,7 +7,7 @@
     "node": "6.2.0"
   },
   "scripts": {
-    "test": "mocha --reporter spec 'test/**/*.js'"
+    "test": "NODE_ENV=test mocha --reporter spec 'test/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/aaronpanch/hercules",
   "dependencies": {
-    "hapi": "^13.4.1"
+    "co": "^4.6.0",
+    "hapi": "^13.4.1",
+    "mongodb": "^2.1.18"
   },
   "devDependencies": {
     "chai": "^3.5.0",
