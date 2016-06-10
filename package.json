@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Deploy applications with strength!",
   "main": "server.js",
+  "engines": {
+    "node": "6.2.0"
+  },
   "scripts": {
     "test": "mocha --reporter spec 'test/**/*.js'"
   },
