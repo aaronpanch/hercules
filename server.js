@@ -6,8 +6,9 @@ const Hapi = require('hapi');
 const server = new Hapi.Server();
 server.connection({ port: config.port });
 
-const routes = require('./src/routes')
-routes.createFor(server);
+server.register(require('./src/appsPlugin'), (err) => {
+  if (err) { console.error('Failed to load plugin: ', err); }
+});
 
 server.start((err) => {
   if (err) {
