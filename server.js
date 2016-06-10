@@ -6,7 +6,15 @@ const Hapi = require('hapi');
 const server = new Hapi.Server();
 server.connection({ port: config.port });
 
-server.register(require('./src/appsPlugin'), (err) => {
+server.register([
+    require('./src/appsPlugin'),
+    {
+      register: require('./src/mongodbPlugin'),
+      options: {
+        dbURI: `${config.mongodbURI}hercules`
+      }
+    }
+  ], (err) => {
   if (err) { console.error('Failed to load plugin: ', err); }
 });
 
