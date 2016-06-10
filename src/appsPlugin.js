@@ -2,9 +2,17 @@ const appsPlugin = {
   register: function (server, options, next) {
     server.route({
       method: 'GET',
-      path: '/',
+      path: '/apps',
       handler: (request, reply) => {
-        reply({ msg: 'Hello World!' });
+        request.server.app.database.collection('apps').find().toArray()
+          .then((apps) => {
+            reply({ apps });
+          })
+          .catch(() => {
+            let response = reply();
+            response.statusCode = 500;
+            return response;
+          });
       }
     });
 
