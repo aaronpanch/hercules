@@ -1,5 +1,7 @@
 'use strict';
 
+const Joi = require('joi');
+
 const appsPlugin = {
   register: function (server, options, next) {
     server.route({
@@ -30,6 +32,15 @@ const appsPlugin = {
           .then(() => {
             reply({ app });
           });
+      },
+      config: {
+        validate: {
+          payload: {
+            name: Joi.string().required(),
+            repo: Joi.string().regex(/\w+\/\w+/).required(),
+            description: Joi.string()
+          }
+        }
       }
     });
 

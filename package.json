@@ -27,6 +27,7 @@
     "hapi": "^13.4.1",
     "inert": "^4.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "joi": "^8.4.1",
     "mongodb": "^2.1.18",
     "normalize.css": "^4.1.1",
     "react": "^15.1.0",
