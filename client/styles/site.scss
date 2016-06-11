@@ -5,10 +5,12 @@
 }
 
 .site__body {
-  align-items: center;
+  background: linear-gradient(to bottom,  #51074B, #C10056);
+  color: #fff;
   display: flex;
   flex: 1;
   justify-content: center;
+  padding-top: 4rem;
 }
 
 .site__header {
