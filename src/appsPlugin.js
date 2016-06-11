@@ -18,6 +18,21 @@ const appsPlugin = {
       }
     });
 
+    server.route({
+      method: 'POST',
+      path: '/apps',
+      handler: (request, reply) => {
+        const name = request.payload.name
+            , description = request.payload.description;
+
+        let app = { name, description }
+        server.plugins.mongodbPlugin.db.collection('apps').insertOne(Object.assign({}, app))
+          .then(() => {
+            reply({ app });
+          });
+      }
+    });
+
     return next();
   }
 }
