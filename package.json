@@ -7,7 +7,7 @@
     "node": "6.2.0"
   },
   "scripts": {
-    "build": "webpack",
+    "build": "webpack -p --config ./webpack.prod.config.js",
     "dev": "webpack --progress --color --watch & nodemon server.js",
     "test": "NODE_ENV=test mocha --reporter spec 'test/**/*.js'",
     "heroku-postbuild": "npm run build"
