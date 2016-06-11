@@ -8,6 +8,7 @@ server.connection({ port: config.port });
 
 server.register(
   [
+    require('inert'),
     {
       register: require('./src/mongodbPlugin'),
       options: {
@@ -17,6 +18,16 @@ server.register(
     require('./src/appsPlugin')
   ],
   (err) => {
+    server.route({
+      method: 'GET',
+      path: '/{param*}',
+      handler: {
+        directory: {
+          path: 'public'
+        }
+      }
+    })
+
     if (err) {
       console.error('Failed to load plugin: ', err);
     }
