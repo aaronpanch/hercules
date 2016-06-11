@@ -9,8 +9,8 @@ const configs = {
     port: 1234,
     mongodbURI: 'mongodb://localhost:27017/hercules-test'
   },
-  prod: {
-    env: 'prod',
+  production: {
+    env: 'production',
     port: process.env.PORT,
     mongodbURI: process.env.MONGODB_URI
   }
