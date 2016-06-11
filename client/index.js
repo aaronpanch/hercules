@@ -1,6 +1,5 @@
 import 'isomorphic-fetch';
 
-require('normalize.css');
 require('./styles/main.scss');
 
 import React from 'react';
