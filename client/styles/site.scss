@@ -5,8 +5,7 @@
 }
 
 .site__body {
-  background: linear-gradient(to bottom,  #51074B, #C10056);
-  color: #fff;
+  background: #f0f0f0;
   display: flex;
   flex: 1;
   justify-content: center;
@@ -15,11 +14,10 @@
 
 .site__header {
   background: #fff;
-  padding: 2rem;
+  padding: 3rem;
 }
 
 .site__title {
-  font-weight: 300;
   letter-spacing: 2px;
   margin: 0;
   text-align: center;

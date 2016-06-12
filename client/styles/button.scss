@@ -1,0 +1,20 @@
+.button {
+  background: #dfdfdf;
+  border: none;
+  color: #777;
+  cursor: pointer;
+  padding: 1rem;
+
+  &--outlined {
+    background: transparent;
+    border: 2px solid;
+    border-radius: 5px;
+    color: inherit;
+  }
+
+  &--primary {
+    background: #9578E4;
+    color: #fff;
+    min-width: 9rem;
+  }
+}

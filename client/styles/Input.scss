@@ -1,0 +1,44 @@
+$transition-speed: 300ms;
+
+.input-component {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.input-component__input {
+  background: rgba(0,0,0,0.07);
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 3px;
+  padding: 1.5rem 2.5rem 0.5rem 1rem;
+  width: 100%;
+  transition: border-bottom $transition-speed;
+
+  &:focus {
+    border-bottom-color: rgba(0,0,0,0.2); //#344652;
+    outline: none;
+  }
+
+  .input-component--disabled > & {
+    color: rgba(0,0,0,0.3);
+  }
+}
+
+.input-component__label {
+  color: rgba(0,0,0,0.5);
+  left: 1rem;
+  pointer-events: none;
+  position: absolute;
+  text-transform: lowercase;
+  top: 1rem;
+  transform-origin: left center;
+  transition: transform $transition-speed;
+
+  .has-text > & {
+    transform: scale(0.8) translate(0, -0.9rem);
+  }
+
+  .input-component--disabled > & {
+    color: rgba(0,0,0,0.3);
+  }
+}

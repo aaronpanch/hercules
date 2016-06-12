@@ -1,0 +1,23 @@
+.card {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 2px #ccc;
+  overflow: hidden;
+
+  &__padded {
+    padding: 3rem;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 1rem 0;
+  }
+
+  &__buttons {
+    border-top-left-radius: 5px;
+    float: right;
+    margin-top: -1rem;
+    overflow: hidden;
+  }
+}

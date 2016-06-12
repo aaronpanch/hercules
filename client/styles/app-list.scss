@@ -1,31 +1,17 @@
 .app-list {
   flex: 1;
-  max-width: 500px;
   list-style: none;
   margin: 0;
+  max-width: 700px;
   padding: 0;
-}
 
-.app-list__item {
-  padding: 1rem 0.5rem;
-  width: 100%;
-}
+  &__item {
+    padding: 1rem 0.5rem;
+    width: 100%;
 
-.app-list__message {
-  font-weight: 300;
-  text-align: center;
-}
-
-.app-list__button {
-  background: transparent;
-  border: 2px solid;
-  border-radius: 5px;
-  color: inherit;
-  cursor: pointer;
-  padding: 1rem;
-  transition: background 300ms;
-
-  &:hover {
-    background: rgba(255,255,255,0.2)
+    &:empty {
+      display: none;
+    }
   }
 }
+
