@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 require('../styles/app-list.scss');
 require('../styles/button.scss');
@@ -36,23 +37,38 @@ class AppsList extends React.Component {
       (<li className="app-list__item u-text-align-center">There aren't any apps!</li>);
 
     let addButton = (
-      <button
-        className="button button--outlined"
-        onClick={this.addItem.bind(this)}>
-        Add An Application
-      </button>
+      <li className="app-list__item u-text-align-center" key="app-list-add-button">
+        <button
+          className="button button--outlined"
+          onClick={this.addItem.bind(this)}>
+          Add An Application
+        </button>
+      </li>
     );
 
+    let appForm = (
+      <li className="app-list__item" key="app-list-app-form">
+        <ApplicationForm cancelAdding={this.cancelAdding.bind(this)} />
+      </li>
+    );
+
+    if (this.state.isAddingApp) {
+      items.push(appForm);
+    } else {
+      items.push(addButton);
+    }
+
     return (
-      <ul className="app-list">
-        {items}
-        <li className="app-list__item">
-          {this.state.isAddingApp ? <ApplicationForm cancelAdding={this.cancelAdding.bind(this)} /> : null}
-        </li>
-        <li className="app-list__item u-text-align-center">
-          {this.state.isAddingApp ? null : addButton}
-        </li>
-      </ul>
+      <ReactCSSTransitionGroup
+        component="ul"
+        className="app-list"
+        transitionName="slide"
+        transitionAppear={true}
+        transitionAppearTimeout={325 + items.length * 100}
+        transitionEnterTimeout={175}
+        transitionLeaveTimeout={175}>
+          {items}
+      </ReactCSSTransitionGroup>
     )
   }
 }
