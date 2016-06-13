@@ -23,7 +23,7 @@ class ApplicationForm extends React.Component {
         <div className="card__padded">
           <h1 className="card__title">Add Application</h1>
           <FormRow
-            hint="Choose a unique name as an itentifier for your app">
+            hint="Choose a unique name as an identifier for your app">
             <Input
               label="name"
               value={this.state.appName}
@@ -36,7 +36,7 @@ class ApplicationForm extends React.Component {
               onChange={e => {this.setState({ desc: e.target.value })}} />
           </FormRow>
           <FormRow
-            hint="GitHub repository details"
+            hint="Enter the GitHub repository details"
             >
             <div className="grid">
               <div className="grid-1">
