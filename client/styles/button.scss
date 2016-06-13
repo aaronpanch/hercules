@@ -1,0 +1,21 @@
+.button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 1em;
+
+  &--outlined {
+    border: 2px solid;
+    border-radius: 5px;
+  }
+
+  &--primary {
+    background: #9578E4;
+    color: #fff;
+    min-width: 9em;
+  }
+
+  &--cancel {
+    color: #777;
+  }
+}

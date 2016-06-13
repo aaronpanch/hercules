@@ -1,3 +1,5 @@
+@import "variables";
+
 .site {
   display: flex;
   flex-direction: column;
@@ -5,19 +7,35 @@
 }
 
 .site__body {
-  align-items: center;
+  background: #f0f0f0;
   display: flex;
   flex: 1;
   justify-content: center;
+  padding-top: 1rem;
+
+  @media screen and (min-width: $small-breakpoint) {
+    padding-top: 2rem;
+  }
+
+  @media screen and (min-width: $medium-breakpoint) {
+    padding-top: 4rem;
+  }
 }
 
 .site__header {
   background: #fff;
-  padding: 2rem;
+  padding: 1rem;
+
+  @media screen and (min-width: $small-breakpoint) {
+    padding: 2rem;
+  }
+
+  @media screen and (min-width: $medium-breakpoint) {
+    padding: 4rem;
+  }
 }
 
 .site__title {
-  font-weight: 300;
   letter-spacing: 2px;
   margin: 0;
   text-align: center;

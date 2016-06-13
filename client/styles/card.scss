@@ -1,0 +1,37 @@
+@import "variables";
+
+.card {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 2px #ccc;
+  overflow: hidden;
+
+  @media screen and (max-width: $small-breakpoint) {
+    font-size: 14px;
+  }
+
+  &__padded {
+    padding: 1rem;
+
+    @media screen and (min-width: $small-breakpoint) {
+      padding: 2rem;
+    }
+
+    @media screen and (min-width: $medium-breakpoint) {
+      padding: 3rem;
+    }
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 1rem 0;
+  }
+
+  &__buttons {
+    border-top-left-radius: 5px;
+    float: right;
+    margin-top: -1rem;
+    overflow: hidden;
+  }
+}
