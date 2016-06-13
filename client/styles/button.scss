@@ -1,20 +1,21 @@
 .button {
-  background: #dfdfdf;
+  background: transparent;
   border: none;
-  color: #777;
   cursor: pointer;
-  padding: 1rem;
+  padding: 1em;
 
   &--outlined {
-    background: transparent;
     border: 2px solid;
     border-radius: 5px;
-    color: inherit;
   }
 
   &--primary {
     background: #9578E4;
     color: #fff;
-    min-width: 9rem;
+    min-width: 9em;
+  }
+
+  &--cancel {
+    color: #777;
   }
 }

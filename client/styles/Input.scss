@@ -1,7 +1,6 @@
 $transition-speed: 300ms;
 
 .input-component {
-  margin-bottom: 1rem;
   position: relative;
 }
 
@@ -10,7 +9,7 @@ $transition-speed: 300ms;
   border: none;
   border-bottom: 2px solid transparent;
   border-radius: 3px;
-  padding: 1.5rem 2.5rem 0.5rem 1rem;
+  padding: 1.5em 2.5em 0.5em 1em;
   width: 100%;
   transition: border-bottom $transition-speed;
 
@@ -26,16 +25,16 @@ $transition-speed: 300ms;
 
 .input-component__label {
   color: rgba(0,0,0,0.5);
-  left: 1rem;
+  left: 1em;
   pointer-events: none;
   position: absolute;
   text-transform: lowercase;
-  top: 1rem;
+  top: 1em;
   transform-origin: left center;
   transition: transform $transition-speed;
 
   .has-text > & {
-    transform: scale(0.8) translate(0, -0.9rem);
+    transform: scale(0.8) translate(0, -0.9em);
   }
 
   .input-component--disabled > & {

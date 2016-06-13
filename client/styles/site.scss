@@ -1,3 +1,5 @@
+@import "variables";
+
 .site {
   display: flex;
   flex-direction: column;
@@ -9,12 +11,28 @@
   display: flex;
   flex: 1;
   justify-content: center;
-  padding-top: 4rem;
+  padding-top: 1rem;
+
+  @media screen and (min-width: $small-breakpoint) {
+    padding-top: 2rem;
+  }
+
+  @media screen and (min-width: $medium-breakpoint) {
+    padding-top: 4rem;
+  }
 }
 
 .site__header {
   background: #fff;
-  padding: 3rem;
+  padding: 1rem;
+
+  @media screen and (min-width: $small-breakpoint) {
+    padding: 2rem;
+  }
+
+  @media screen and (min-width: $medium-breakpoint) {
+    padding: 4rem;
+  }
 }
 
 .site__title {

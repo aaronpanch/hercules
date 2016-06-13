@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from './InputComponent';
+import FormRow from './FormRowComponent';
 
 require('../styles/card.scss');
 require('../styles/button.scss');
@@ -11,6 +12,7 @@ class ApplicationForm extends React.Component {
     this.state = {
       appName: this.props.name || '',
       desc: this.props.description || '',
+      owner: this.props.owner || '',
       repo: this.props.repo || ''
     }
   }
@@ -20,21 +22,41 @@ class ApplicationForm extends React.Component {
       <section className="card">
         <div className="card__padded">
           <h1 className="card__title">Add Application</h1>
-          <Input
-            label="name"
-            value={this.state.appName}
-            onChange={e => {this.setState({ appName: e.target.value })}} />
-          <Input
-            label="description"
-            value={this.state.desc}
-            onChange={e => {this.setState({ desc: e.target.value })}} />
-          <Input
-            label="github repo"
-            value={this.state.repo}
-            onChange={e => {this.setState({ repo: e.target.value })}} />
+          <FormRow
+            hint="Choose a unique name as an itentifier for your app">
+            <Input
+              label="name"
+              value={this.state.appName}
+              onChange={e => {this.setState({ appName: e.target.value })}} />
+          </FormRow>
+          <FormRow>
+            <Input
+              label="description"
+              value={this.state.desc}
+              onChange={e => {this.setState({ desc: e.target.value })}} />
+          </FormRow>
+          <FormRow
+            hint="GitHub repository details"
+            >
+            <div className="grid">
+              <div className="grid-1">
+                <Input
+                  label="owner"
+                  value={this.state.owner}
+                  onChange={e => {this.setState({ owner: e.target.value })}} />
+              </div>
+              <p className="grid-0 u-margin-an" style={{ display: 'flex', alignItems: 'center' }}>/</p>
+              <div className="grid-1">
+                <Input
+                  label="repo"
+                  value={this.state.repo}
+                  onChange={e => {this.setState({ repo: e.target.value })}} />
+              </div>
+            </div>
+          </FormRow>
         </div>
         <div className="card__buttons">
-          <button onClick={this.props.cancelAdding} className="button">cancel</button>
+          <button onClick={this.props.cancelAdding} className="button button--cancel">cancel</button>
           <button className="button button--primary">save</button>
         </div>
       </section>
