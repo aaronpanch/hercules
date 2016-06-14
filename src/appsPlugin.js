@@ -8,9 +8,15 @@ const appsPlugin = {
       method: 'GET',
       path: '/apps',
       handler: (request, reply) => {
-        server.plugins.mongodbPlugin.db.collection('apps').find({}, { '_id': false }).toArray()
+        server.plugins.mongodbPlugin.db.collection('apps')
+          .find({}, { '_id': false }).toArray()
           .then((apps) => {
-            reply({ apps });
+            apps = apps.reduce((appsObj, app) => {
+              appsObj[app.name] = app;
+              return appsObj;
+            }, {});
+
+            reply({ apps: Object.keys(apps), entities: apps });
           })
           .catch(() => {
             let response = reply();

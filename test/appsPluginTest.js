@@ -8,15 +8,20 @@ const server = require('../server')
 describe('Apps Plugin', () => {
   it('should return a list of apps', (done) => {
     co(function*() {
-      yield DB.collection('apps').insertOne({ name: 'cool' });
+      yield DB.collection('apps').insertMany([
+        { name: 'app1', other: 'stuff' },
+        { name: 'app2', other: 'more' }]
+      );
 
       let res = yield server.inject({ method: 'GET', url: '/apps' });
 
       expect(res.statusCode).to.equal(200);
       expect(res.result).to.eql({
-        apps: [
-          { name: 'cool' }
-        ]
+        apps: [ 'app1', 'app2' ],
+        entities: {
+          app1: { name: 'app1', other: 'stuff' },
+          app2: { name: 'app2', other: 'more' }
+        }
       });
 
       done();

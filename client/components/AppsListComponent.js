@@ -13,6 +13,8 @@ class AppsList extends React.Component {
     super(props);
 
     this.state = {
+      apps: this.props.initialData.apps,
+      appEntities: this.props.initialData.entities,
       isAddingApp: false
     }
   }
@@ -22,15 +24,16 @@ class AppsList extends React.Component {
   }
 
   cancelAdding() {
-   this.setState({ isAddingApp: false });
+    this.setState({ isAddingApp: false });
   }
 
   render() {
-    let items = this.props.apps.length > 0 ?
-      this.props.apps.map((item) => {
+    let items = this.state.apps.length > 0 ?
+      this.state.apps.map((appName) => {
+          const entity = this.state.appEntities[appName];
           return (
-            <li key={item.name} className="app-list__item">
-              <Application {...item} />
+            <li key={appName} className="app-list__item">
+              <Application {...entity} />
             </li>
           );
       }) :

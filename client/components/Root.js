@@ -3,7 +3,7 @@ import React from 'react';
 import AppsList from './AppsListComponent';
 
 let Root = (props) => (
-  <AppsList apps={props.data.apps} />
+  <AppsList {...props} />
 );
 
 export default Root;
