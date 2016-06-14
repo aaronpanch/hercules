@@ -14,7 +14,7 @@ const configs = {
   production: {
     env: 'production',
     port: process.env.PORT,
-    mongodbURI: process.env.MONGODB_URI
+    mongodbURI: process.env.MONGODB_URI,
     socketProtocol: 'wss://'
   }
 }
