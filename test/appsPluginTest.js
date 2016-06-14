@@ -9,23 +9,23 @@ describe('Apps Plugin', () => {
   it('should return a list of apps', (done) => {
     co(function*() {
       yield DB.collection('apps').insertMany([
-        { name: 'app1', other: 'stuff' },
-        { name: 'app2', other: 'more' }]
+        { _id: 'test1', name: 'app1', other: 'stuff' },
+        { _id: 'test2', name: 'app2', other: 'more' }]
       );
 
       let res = yield server.inject({ method: 'GET', url: '/apps' });
 
       expect(res.statusCode).to.equal(200);
       expect(res.result).to.eql({
-        apps: [ 'app1', 'app2' ],
+        apps: [ 'test1', 'test2' ],
         entities: {
-          app1: { name: 'app1', other: 'stuff' },
-          app2: { name: 'app2', other: 'more' }
+          test1: { _id: 'test1', name: 'app1', other: 'stuff' },
+          test2: { _id: 'test2', name: 'app2', other: 'more' }
         }
       });
 
       done();
-    });
+    }).catch(onError);
   });
 
   it('should create an app document', (done) => {
@@ -52,7 +52,7 @@ describe('Apps Plugin', () => {
       expect(appDoc.length).to.equal(1);
 
       done();
-    });
+    }).catch(onError);
   });
 
   it('should reject invalid app metadata', (done) => {
@@ -64,6 +64,6 @@ describe('Apps Plugin', () => {
       expect(res.statusCode).to.equal(400);
 
       done();
-    });
+    }).catch(onError);
   });
 });

@@ -29,10 +29,10 @@ class AppsList extends React.Component {
 
   render() {
     let items = this.state.apps.length > 0 ?
-      this.state.apps.map((appName) => {
-          const entity = this.state.appEntities[appName];
+      this.state.apps.map((appID) => {
+          const entity = this.state.appEntities[appID];
           return (
-            <li key={appName} className="app-list__item">
+            <li key={appID} className="app-list__item">
               <Application {...entity} />
             </li>
           );

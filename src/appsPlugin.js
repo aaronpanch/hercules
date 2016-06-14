@@ -9,10 +9,10 @@ const appsPlugin = {
       path: '/apps',
       handler: (request, reply) => {
         server.plugins.mongodbPlugin.db.collection('apps')
-          .find({}, { '_id': false }).toArray()
+          .find({}).toArray()
           .then((apps) => {
             apps = apps.reduce((appsObj, app) => {
-              appsObj[app.name] = app;
+              appsObj[app._id] = app;
               return appsObj;
             }, {});
 
