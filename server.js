@@ -16,7 +16,14 @@ server.register(
         dbURI: config.mongodbURI
       }
     },
-    require('./src/appsPlugin')
+    require('./src/appsPlugin'),
+    {
+      register: require('./src/slackPlugin'),
+      options: {
+        slackDeployToken: config.slackDeployToken,
+        hostURL: config.hostURL
+      }
+    }
   ],
   (err) => {
     server.route({
