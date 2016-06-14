@@ -4,6 +4,9 @@ const MongoClient = require('mongodb').MongoClient
     , config = require('../config');
 
 global.expect = require('chai').expect;
+global.onError = function (err) {
+  console.error(err)
+}
 
 // connect to database
 before(() => {

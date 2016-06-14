@@ -8,9 +8,15 @@ const appsPlugin = {
       method: 'GET',
       path: '/apps',
       handler: (request, reply) => {
-        server.plugins.mongodbPlugin.db.collection('apps').find({}, { '_id': false }).toArray()
+        server.plugins.mongodbPlugin.db.collection('apps')
+          .find({}).toArray()
           .then((apps) => {
-            reply({ apps });
+            apps = apps.reduce((appsObj, app) => {
+              appsObj[app._id] = app;
+              return appsObj;
+            }, {});
+
+            reply({ apps: Object.keys(apps), entities: apps });
           })
           .catch(() => {
             let response = reply();
@@ -25,11 +31,12 @@ const appsPlugin = {
       path: '/apps',
       handler: (request, reply) => {
         const name = request.payload.name
-            , description = request.payload.description;
+            , description = request.payload.description
+            , repo = request.payload.repo;
 
-        let app = { name, description }
-        server.plugins.mongodbPlugin.db.collection('apps').insertOne(Object.assign({}, app))
-          .then(() => {
+        let app = { name, description, repo }
+        server.plugins.mongodbPlugin.db.collection('apps').insertOne(app)
+          .then((result) => {
             reply({ app });
           });
       },

@@ -8,6 +8,7 @@ server.connection({ port: config.port });
 
 server.register(
   [
+    require('nes'),
     require('inert'),
     {
       register: require('./src/mongodbPlugin'),

@@ -13,7 +13,7 @@
 
     &.slide-appear {
       opacity: 0;
-      transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100px, 0);
       transition: opacity 300ms, transform 150ms ease-out;
 
       @for $i from 0 through 10 {
@@ -36,7 +36,7 @@
 
     &.slide-enter {
       opacity: 0;
-      transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100px, 0);
       transition: transform 150ms ease-out, opacity 150ms;
     }
 
