@@ -35,8 +35,8 @@ const appsPlugin = {
             , repo = request.payload.repo;
 
         let app = { name, description, repo }
-        server.plugins.mongodbPlugin.db.collection('apps').insertOne(Object.assign({}, app))
-          .then(() => {
+        server.plugins.mongodbPlugin.db.collection('apps').insertOne(app)
+          .then((result) => {
             reply({ app });
           });
       },

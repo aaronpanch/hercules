@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import merge from 'lodash/merge';
+import union from 'lodash/union';
 
 require('../styles/app-list.scss');
 require('../styles/button.scss');
@@ -15,35 +17,55 @@ class AppsList extends React.Component {
     this.state = {
       apps: this.props.initialData.apps,
       appEntities: this.props.initialData.entities,
-      isAddingApp: false
+      isLoading: false,
+      isAddingApp: false,
+      canAddApp: true
     }
   }
 
-  addItem() {
-    this.setState({ isAddingApp: true });
+  createApp(app) {
+    this.setState({ isLoading: true });
+    this.props.client.request({
+      path: '/apps',
+      method: 'POST',
+      payload: app
+    }, (err, payload) => {
+      let newState = {
+        isLoading: false
+      }
+
+      if (!err) {
+        const { app } = payload;
+        newState.isAddingApp = false;
+        newState.appEntities = merge({ [app._id]: app }, this.state.appEntities);
+        newState.apps = union(this.state.apps, [app._id]);
+        setTimeout(() => { this.setState({ canAddApp: true }) }, 200);
+      }
+
+      this.setState(newState);
+    });
   }
 
-  cancelAdding() {
-    this.setState({ isAddingApp: false });
+  showForm(state) {
+    this.setState({ isAddingApp: state, canAddApp: !state });
   }
 
   render() {
-    let items = this.state.apps.length > 0 ?
-      this.state.apps.map((appID) => {
-          const entity = this.state.appEntities[appID];
-          return (
-            <li key={appID} className="app-list__item">
-              <Application {...entity} />
-            </li>
-          );
-      }) :
-      (<li className="app-list__item u-text-align-center">There aren't any apps!</li>);
+    let items = this.state.apps.map((appID) => {
+      const entity = this.state.appEntities[appID];
+      return (
+        <li key={appID} className="app-list__item">
+          <Application {...entity} />
+        </li>
+      );
+    });
 
     let addButton = (
       <li className="app-list__item u-text-align-center" key="app-list-add-button">
+        { items.length === 0 ? <p>There aren't any apps!</p> : null }
         <button
           className="button button--outlined"
-          onClick={this.addItem.bind(this)}>
+          onClick={() => { this.showForm(true) }}>
           Add An Application
         </button>
       </li>
@@ -51,13 +73,18 @@ class AppsList extends React.Component {
 
     let appForm = (
       <li className="app-list__item" key="app-list-app-form">
-        <ApplicationForm cancelAdding={this.cancelAdding.bind(this)} />
+        <ApplicationForm
+          disabled={this.state.isLoading}
+          cancelAdding={() => { this.showForm(false) }}
+          createApp={this.createApp.bind(this)} />
       </li>
     );
 
     if (this.state.isAddingApp) {
       items.push(appForm);
-    } else {
+    }
+
+    if (this.state.canAddApp) {
       items.push(addButton);
     }
 

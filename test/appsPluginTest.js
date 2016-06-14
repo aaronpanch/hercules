@@ -42,12 +42,10 @@ describe('Apps Plugin', () => {
       });
 
       expect(res.statusCode).to.equal(200);
-      expect(res.result).to.eql({
-        app: {
-          name: 'application-name',
-          description: 'desc',
-          repo: 'owner/project'
-        }
+      expect(pick(res.result.app, ['name', 'description', 'repo'])).to.eql({
+        name: 'application-name',
+        description: 'desc',
+        repo: 'owner/project'
       });
 
       let appDoc = yield DB.collection('apps').find({ name: 'application-name' }).toArray();

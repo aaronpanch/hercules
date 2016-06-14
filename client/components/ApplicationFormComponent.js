@@ -15,6 +15,21 @@ class ApplicationForm extends React.Component {
       owner: this.props.owner || '',
       repo: this.props.repo || ''
     }
+
+    this.cancel = this.cancel.bind(this);
+    this.create = this.create.bind(this);
+  }
+
+  cancel() {
+    this.props.cancelAdding();
+  }
+
+  create(e) {
+    this.props.createApp({
+      name: this.state.appName,
+      description: this.state.desc,
+      repo: this.state.owner + '/' + this.state.repo
+    });
   }
 
   render() {
@@ -26,12 +41,14 @@ class ApplicationForm extends React.Component {
             hint="Choose a unique name as an identifier for your app">
             <Input
               label="name"
+              disabled={this.props.disabled}
               value={this.state.appName}
               onChange={e => {this.setState({ appName: e.target.value })}} />
           </FormRow>
           <FormRow>
             <Input
               label="description"
+              disabled={this.props.disabled}
               value={this.state.desc}
               onChange={e => {this.setState({ desc: e.target.value })}} />
           </FormRow>
@@ -42,6 +59,7 @@ class ApplicationForm extends React.Component {
               <div className="grid-1">
                 <Input
                   label="owner"
+                  disabled={this.props.disabled}
                   value={this.state.owner}
                   onChange={e => {this.setState({ owner: e.target.value })}} />
               </div>
@@ -49,6 +67,7 @@ class ApplicationForm extends React.Component {
               <div className="grid-1">
                 <Input
                   label="repo"
+                  disabled={this.props.disabled}
                   value={this.state.repo}
                   onChange={e => {this.setState({ repo: e.target.value })}} />
               </div>
@@ -56,8 +75,8 @@ class ApplicationForm extends React.Component {
           </FormRow>
         </div>
         <div className="card__buttons">
-          <button onClick={this.props.cancelAdding} className="button button--cancel">cancel</button>
-          <button className="button button--primary">save</button>
+          <button onClick={this.cancel} className="button button--cancel">cancel</button>
+          <button className="button button--primary" onClick={this.create}>save</button>
         </div>
       </section>
     );
