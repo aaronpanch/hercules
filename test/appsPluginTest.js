@@ -3,7 +3,8 @@
 require('./helper');
 
 const server = require('../server')
-    , co = require('co');
+    , co = require('co')
+    , pick = require('lodash/pick');
 
 describe('Apps Plugin', () => {
   it('should return a list of apps', (done) => {
@@ -44,12 +45,18 @@ describe('Apps Plugin', () => {
       expect(res.result).to.eql({
         app: {
           name: 'application-name',
-          description: 'desc'
+          description: 'desc',
+          repo: 'owner/project'
         }
       });
 
       let appDoc = yield DB.collection('apps').find({ name: 'application-name' }).toArray();
-      expect(appDoc.length).to.equal(1);
+      expect(appDoc[0]).to.include.key('_id');
+      expect(pick(appDoc[0], [ 'name', 'description', 'repo' ])).to.eql({
+        name: 'application-name',
+        description: 'desc',
+        repo: 'owner/project'
+      });
 
       done();
     }).catch(onError);

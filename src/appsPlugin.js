@@ -31,9 +31,10 @@ const appsPlugin = {
       path: '/apps',
       handler: (request, reply) => {
         const name = request.payload.name
-            , description = request.payload.description;
+            , description = request.payload.description
+            , repo = request.payload.repo;
 
-        let app = { name, description }
+        let app = { name, description, repo }
         server.plugins.mongodbPlugin.db.collection('apps').insertOne(Object.assign({}, app))
           .then(() => {
             reply({ app });
