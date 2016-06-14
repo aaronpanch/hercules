@@ -1,6 +1,6 @@
 'use strict';
 
-require('./helper');
+require('./databaseHelper');
 
 const server = require('../server')
     , co = require('co')
