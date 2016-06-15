@@ -30,7 +30,6 @@
     "joi": "^8.4.1",
     "mongodb": "^2.1.18",
     "nes": "^6.1.2",
-    "normalize.css": "^4.1.1",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-dom": "^15.1.0"
