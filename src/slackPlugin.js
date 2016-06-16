@@ -7,6 +7,11 @@ const slackPlugin = {
     server.route({
       method: 'POST',
       path: '/slack/deploy',
+      config: {
+        timeout: {
+          server: 2750
+        }
+      },
       handler: (request, reply) => {
         const { payload } = request;
         if (payload.token !== options.slackDeployToken) {
