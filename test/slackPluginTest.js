@@ -31,7 +31,7 @@ describe('Slack Plugin', () => {
       expect(res.statusCode).to.equal(200);
       expect(res.result).to.eql({
         response_type: 'ephemeral',
-        text: "Sorry Aaron, I didn't understand `/deploy i like cheese`.  Please follow the form `/deploy <app_name>/<ref> to <environment>`"
+        text: "Sorry Aaron, I didn't understand `/deploy i like cheese`.  Send `/deploy help` to see an explanation of options."
       });
 
       done();

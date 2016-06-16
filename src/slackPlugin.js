@@ -2,6 +2,30 @@
 
 const deployCommandParser = require('./messageParser').parseDeploy;
 
+function helpMessage() {
+  const helpText = `
+- \`/deploy help\`—Display this message
+- \`/deploy <app_name>/<ref> to <environment>\`—Initiate a deployment!
+    *app_name*: the name of the application as mapped to a repo on hercules
+    *ref*: _(optional)_ any Git ref (branch, sha, tag)
+    *environment*: an environment to deploy to as set up in hercules
+*Example:* \`/deploy best-application/my-feature to staging\`
+  `;
+
+  return {
+    response_type: 'in_channel',
+    attachments: [
+      {
+        fallback: '`\deploy <app_name>/<ref> to <environment>`',
+        title: 'Hercules Command Reference',
+        color: '#9578E4',
+        text: helpText,
+        mrkdwn_in: ['text']
+      }
+    ]
+  }
+}
+
 const slackPlugin = {
   register: function (server, options, next) {
     server.route({
@@ -20,12 +44,16 @@ const slackPlugin = {
           return response;
         }
 
+        if (payload.text === 'help') {
+          return reply(helpMessage());
+        }
+
         const deployCommand = deployCommandParser(payload.text);
 
         if (!deployCommand) {
           return reply({
             response_type: 'ephemeral',
-            text: `Sorry ${payload.user_name}, I didn't understand \`/deploy ${payload.text}\`.  Please follow the form \`/deploy <app_name>/<ref> to <environment>\``
+            text: `Sorry ${payload.user_name}, I didn't understand \`/deploy ${payload.text}\`.  Send \`/deploy help\` to see an explanation of options.`
           });
         }
 
