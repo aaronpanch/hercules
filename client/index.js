@@ -1,5 +1,3 @@
-import 'isomorphic-fetch';
-
 require('./styles/main.scss');
 
 import React from 'react';
