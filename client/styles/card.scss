@@ -6,10 +6,6 @@
   box-shadow: 0 0 2px #ccc;
   overflow: hidden;
 
-  @media screen and (max-width: $small-breakpoint) {
-    font-size: 14px;
-  }
-
   &__padded {
     padding: 1rem;
 
@@ -23,8 +19,7 @@
   }
 
   &__title {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 1.25em;
     margin: 0 0 1rem 0;
   }
 
