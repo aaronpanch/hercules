@@ -4,9 +4,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './components/Root';
 import Nes from 'nes';
-import config from '../config';
 
-let client = new Nes.Client(config.socketProtocol + location.host);
+const socketProtocol = window.location.protocol === 'http:' ? 'ws:' : 'wss:';
+let client = new Nes.Client(`${socketProtocol}//${location.host}`);
 
 client.connect(() => {
   client.request('/apps', function (err, payload) {

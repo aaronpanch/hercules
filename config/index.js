@@ -4,7 +4,6 @@ const configs = {
     port: 3000,
     hostURL: 'http://localhost:3000',
     mongodbURI: 'mongodb://localhost:27017/hercules-dev',
-    socketProtocol: 'ws://',
     slackDeployToken: process.env.SLACK_DEPLOY_TOKEN || 'slackDevToken'
   },
   test: {
@@ -12,7 +11,6 @@ const configs = {
     port: 1234,
     hostURL: 'http://localhost:1234',
     mongodbURI: 'mongodb://localhost:27017/hercules-test',
-    socketProtocol: 'ws://',
     slackDeployToken: 'slackTestToken'
   },
   production: {
@@ -20,7 +18,6 @@ const configs = {
     port: process.env.PORT,
     hostURL: process.env.HOST_URL,
     mongodbURI: process.env.MONGODB_URI,
-    socketProtocol: 'wss://',
     slackDeployToken: process.env.SLACK_DEPLOY_TOKEN
   }
 }
