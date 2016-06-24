@@ -1,6 +1,13 @@
-const configs = {
+const baseConfig = {
+  port: process.env.PORT,
+  hostURL: process.env.HOST_URL,
+  mongodbURI: process.env.MONGODB_URI,
+  slackDeployToken: process.env.SLACK_DEPLOY_TOKEN
+};
+
+const configOverrides = {
   dev: {
-    port: 3000,
+    port: process.env.PORT || 3000,
     hostURL: 'http://localhost:3000',
     mongodbURI: 'mongodb://localhost:27017/hercules-dev',
     slackDeployToken: process.env.SLACK_DEPLOY_TOKEN || 'slackDevToken'
@@ -11,12 +18,11 @@ const configs = {
     mongodbURI: 'mongodb://localhost:27017/hercules-test',
     slackDeployToken: 'slackTestToken'
   },
-  production: {
-    port: process.env.PORT,
-    hostURL: process.env.HOST_URL,
-    mongodbURI: process.env.MONGODB_URI,
-    slackDeployToken: process.env.SLACK_DEPLOY_TOKEN
-  }
+  production: {}
 }
 
-module.exports = configs[process.env.NODE_ENV || 'dev'];
+function getConfig(env) {
+  return Object.assign({}, baseConfig, configOverrides[env]);
+}
+
+module.exports = getConfig(process.env.NODE_ENV || 'dev');
