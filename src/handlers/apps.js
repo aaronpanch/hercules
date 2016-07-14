@@ -1,12 +1,7 @@
-let db = [
-  {
-    name: 'foo'
-  }
-]
-
 const appsHandler = {
   list: function *(next) {
-    this.body = db;
+    let apps = yield this.db.App.findAll();
+    this.body = apps;
   }
 }
 

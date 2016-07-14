@@ -6,15 +6,24 @@ const route = require('koa-route');
 const koa = require('koa');
 let app = koa();
 
-const apps = require('./src/handlers/apps');
-
 if (app.env === 'development')
   app.use(logger());
 
+const models = require('./src/models');
+app.context.db = models;
+
 // Routes
+const apps = require('./src/handlers/apps');
+
 app.use(route.get('/apps', apps.list));
 
-app.listen(process.env.PORT || 3000);
+
+models.sequelize.sync().then(() => {
+  const port = process.env.PORT || 3000
+  app.listen(port);
+  console.log(`Koa server listening on port ${port}`);
+});
+
 
 // const config = require('./config');
 // const Hapi = require('hapi');
