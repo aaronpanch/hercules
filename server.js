@@ -6,13 +6,13 @@ const route = require('koa-route');
 const koa = require('koa');
 let app = koa();
 
+const apps = require('./src/handlers/apps');
+
 if (app.env === 'development')
   app.use(logger());
 
 // Routes
-app.use(route.get('/apps', function *() {
-  this.body = 'Hello World';
-}));
+app.use(route.get('/apps', apps.list));
 
 app.listen(process.env.PORT || 3000);
 
