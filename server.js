@@ -1,8 +1,7 @@
 'use strict';
 
-// Middleware
 const logger = require('koa-logger');
-
+const route = require('koa-route');
 
 const koa = require('koa');
 let app = koa();
@@ -10,11 +9,12 @@ let app = koa();
 if (app.env === 'development')
   app.use(logger());
 
-app.use(function *(){
+// Routes
+app.use(route.get('/apps', function *() {
   this.body = 'Hello World';
-});
+}));
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 
 // const config = require('./config');
 // const Hapi = require('hapi');
