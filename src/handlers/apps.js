@@ -16,6 +16,10 @@ const appsHandler = {
     } catch (err) {
       this.status = 400;
     }
+  },
+  show: function *(appID) {
+    let app = yield this.db.App.findById(appID);
+    this.body = app;
   }
 }
 

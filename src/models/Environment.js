@@ -1,14 +1,19 @@
 "use strict";
 
 module.exports = function(sequelize, DataTypes) {
-  let App = sequelize.define('App', {
+  let Environment = sequelize.define('Environment', {
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: true
-      },
-      unique: true
+      }
     },
     description: {
       type: DataTypes.STRING,
@@ -20,10 +25,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        App.hasMany(models.Environment);
+        Environment.belongsTo(models.App);
       }
     }
   });
 
-  return App;
+  return Environment;
 }

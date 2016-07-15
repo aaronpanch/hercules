@@ -39,6 +39,7 @@ app.context.db = models;
 
 // Routes
 const apps = require('./src/handlers/apps');
+const environments = require('./src/handlers/environments');
 const login = require('./src/handlers/login');
 
 app.use(route.get('/login', login.createSession));
@@ -47,6 +48,8 @@ app.use(login.checkSession);
 app.use(route.get('/', function *() { yield send(this, 'src/views/index.html'); }));
 app.use(route.get('/apps', apps.list));
 app.use(route.post('/apps', apps.create));
+app.use(route.get('/apps/:appID', apps.show));
+app.use(route.get('/apps/:appID/environments', environments.list));
 
 // Start App (unless testing)
 if (app.env !== 'test') {
