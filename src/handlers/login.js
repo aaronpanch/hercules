@@ -6,7 +6,11 @@ const request = require('request-promise');
 const loginHandler = {
   checkSession: function *(next) {
     if (!this.session.userID) {
-      this.redirect('/connect/github');
+      if (this.request.get('X-Requested-With') === 'XMLHttpRequest') {
+        this.status = 401;
+      } else {
+        this.redirect('/connect/github');
+      }
     } else {
       this.state.user = yield this.db.User.findById(this.session.userID)
     }

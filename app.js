@@ -3,6 +3,7 @@
 const config = require('config');
 
 const logger = require('koa-logger')
+    , bodyParser = require('koa-bodyparser')
     , route = require('koa-route')
     , send = require('koa-send')
     , session = require('koa-session')
@@ -19,6 +20,8 @@ if (app.env === 'development') {
     config: './webpack.config.js'
   }));
 }
+
+app.use(bodyParser());
 
 // OAuth/grant
 let grant = new Grant({
@@ -43,7 +46,7 @@ app.use(route.get('/login', login.createSession));
 app.use(login.checkSession);
 app.use(route.get('/', function *() { yield send(this, 'src/views/index.html'); }));
 app.use(route.get('/apps', apps.list));
-
+app.use(route.post('/apps', apps.create));
 
 // Start App (unless testing)
 if (app.env !== 'test') {

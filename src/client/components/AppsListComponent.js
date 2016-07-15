@@ -2,6 +2,7 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import merge from 'lodash/merge';
 import union from 'lodash/union';
+import ajax from '../ajax';
 
 require('../styles/app-list.scss');
 require('../styles/button.scss');
@@ -24,24 +25,24 @@ class AppsList extends React.Component {
 
   createApp(app) {
     this.setState({ isLoading: true });
-    this.props.client.request({
-      path: '/apps',
+    ajax('/apps', {
       method: 'POST',
-      payload: app
-    }, (err, payload) => {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(app)
+    }).then((app) => {
       let newState = {
         isLoading: false
       }
 
-      if (!err) {
-        const { app } = payload;
-        newState.isAddingApp = false;
-        newState.appEntities = merge({ [app._id]: app }, this.state.appEntities);
-        newState.apps = union(this.state.apps, [app._id]);
-        setTimeout(() => { this.setState({ canAddApp: true }) }, 200);
-      }
+      newState.isAddingApp = false;
+      newState.apps = union(this.state.apps, [app]);
+      setTimeout(() => { this.setState({ canAddApp: true }) }, 200);
 
       this.setState(newState);
+    }).catch((err) => {
+      this.setState({ isLoading: false });
     });
   }
 
