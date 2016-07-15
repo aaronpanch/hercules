@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import classNames from 'classnames';
 import ajax from '../ajax';
 
 require('../styles/app-list.scss');
@@ -42,14 +43,30 @@ class AppsList extends React.Component {
     });
   }
 
+  selectApp(id) {
+    this.setState({ canAddApp: false, animatedApp: id });
+    let item = this.refs[id];
+    item.style.left = 0;
+    item.style.top = item.offsetTop + 'px';
+    setTimeout(() => {
+      item.style.position = 'absolute';
+      item.style.top = '0';
+      this.props.selectApp(id);
+      this.setState({ animatedApp: null });
+    }, 300);
+  }
+
   showForm(state) {
     this.setState({ isAddingApp: state, canAddApp: !state });
   }
 
   render() {
     let items = this.props.apps.map((app) => {
+      let classes = classNames(
+        'app-list__item',
+        {'fade-out': this.state.animatedApp && app.id !== this.state.animatedApp })
       return (
-        <li key={app.id} className="app-list__item">
+        <li key={app.id} className={classes} ref={app.id}>
           <Application {...app} />
         </li>
       );
@@ -91,6 +108,7 @@ class AppsList extends React.Component {
         transitionAppear={true}
         transitionAppearTimeout={325 + items.length * 100}
         transitionEnterTimeout={175}
+        transitionLeave={!this.state.animatedApp}
         transitionLeaveTimeout={175}>
           {items}
       </ReactCSSTransitionGroup>
