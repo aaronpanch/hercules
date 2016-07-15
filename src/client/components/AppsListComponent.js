@@ -9,6 +9,7 @@ require('../styles/utilities.scss');
 
 import Application from './ApplicationComponent';
 import ApplicationForm from './ApplicationFormComponent';
+import AppDetail from './AppDetailComponent';
 
 class AppsList extends React.Component {
   constructor(props) {
@@ -67,9 +68,17 @@ class AppsList extends React.Component {
       let classes = classNames(
         'app-list__item',
         {'fade-out': this.state.animatedApp && app.id !== this.state.animatedApp })
+
+      let contents = null;
+      if (app.id === this.state.selectedApp) {
+        contents = <AppDetail {...app} />
+      } else {
+        contents = <Application {...app} selected={false} />
+      }
+
       return (
         <li key={app.id} className={classes} ref={app.id} onClick={this.selectApp(app.id).bind(this)}>
-          <Application {...app} selected={app.id === this.state.selectedApp} />
+          { contents }
         </li>
       );
     });

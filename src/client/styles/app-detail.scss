@@ -1,0 +1,26 @@
+.app-detail {
+  position: relative;
+
+  &__main {
+    transform: translate3d(0, 0, 0);
+    transition: transform 300ms ease-in-out;
+
+    .is-showing-menu & {
+      transform: translate3d(-12.5rem, 0, 0);
+    }
+  }
+
+  &__side {
+    transform: translate3d(0, 0, 0);
+    transition: transform 300ms ease-in-out;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 25rem;
+
+    .is-showing-menu & {
+      transform: translate3d(12.5rem, 0, 0);
+    }
+  }
+}
+

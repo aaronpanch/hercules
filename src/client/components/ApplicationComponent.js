@@ -5,6 +5,8 @@ require('../styles/card.scss');
 require('../styles/table.scss');
 require('../styles/utilities.scss');
 
+import DeploymentForm from './DeploymentFormComponent';
+
 class Application extends React.Component {
   constructor() {
     super();
@@ -64,6 +66,10 @@ class Application extends React.Component {
               </tr>
             </tbody>
           </table>
+
+          <div style={{marginTop: '1rem', textAlign: 'right'}}>
+            <button className="button button--secondary" onClick={() => { this.props.showMenu(<DeploymentForm cancel={this.props.cancelMenu}/>) }}>create deployment</button>
+          </div>
         </div>
       );
     }

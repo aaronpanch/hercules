@@ -20,9 +20,11 @@
   }
 
   &--secondary {
-    background: #2AB4FC;
+    background: #9578E4;
+    border-radius: 3px;
     color: #fff;
     min-width: 9em;
+    border-bottom: 2px solid rgba(0,0,0,0.3);
   }
 
   &--cancel {
