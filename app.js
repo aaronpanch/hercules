@@ -7,8 +7,13 @@ const route = require('koa-route');
 const Koa = require('koa');
 let app = new Koa();
 
-if (app.env === 'development')
+if (app.env === 'development') {
   app.use(logger());
+  app.use(require('koa-static')('public'));
+  app.use(require('koa-webpack-dev')({
+    config: './webpack.config.js'
+  }));
+}
 
 const models = require('./src/models');
 app.context.db = models;
