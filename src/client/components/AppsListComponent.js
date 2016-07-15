@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import merge from 'lodash/merge';
-import union from 'lodash/union';
 import ajax from '../ajax';
 
 require('../styles/app-list.scss');
@@ -16,7 +14,6 @@ class AppsList extends React.Component {
     super(props);
 
     this.state = {
-      apps: this.props.initialData,
       isLoading: false,
       isAddingApp: false,
       canAddApp: true
@@ -32,15 +29,14 @@ class AppsList extends React.Component {
       },
       body: JSON.stringify(app)
     }).then((app) => {
-      let newState = {
-        isLoading: false
-      }
+      this.setState({
+        isLoading: false,
+        isAddingApp: false
+      });
 
-      newState.isAddingApp = false;
-      newState.apps = union(this.state.apps, [app]);
+      this.props.addApp(app);
       setTimeout(() => { this.setState({ canAddApp: true }) }, 200);
 
-      this.setState(newState);
     }).catch((err) => {
       this.setState({ isLoading: false });
     });
@@ -51,7 +47,7 @@ class AppsList extends React.Component {
   }
 
   render() {
-    let items = this.state.apps.map((app) => {
+    let items = this.props.apps.map((app) => {
       return (
         <li key={app.id} className="app-list__item">
           <Application {...app} />
