@@ -18,6 +18,6 @@ function ajax(url) {
     });
 }
 
-ajax('/apps').then((payload) => {
-  ReactDOM.render(<Root initialData={payload} />, document.getElementById('app') );
+ajax('/apps').then((apps) => {
+  ReactDOM.render(<Root initialData={apps} />, document.getElementById('app') );
 });

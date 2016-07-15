@@ -1,4 +1,4 @@
-const co = require('co');
+"use strict";
 
 const appsHandler = {
   list: function *(next) {
