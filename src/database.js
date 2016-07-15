@@ -1,9 +1,6 @@
 const dbConfig = require('config').get('db');
 const Sequelize = require('sequelize');
 
-const cls = require('continuation-local-storage');
-Sequelize.cls = cls.createNamespace('testNamespace');
-
 function connect() {
   return new Sequelize(dbConfig.name, dbConfig.username, dbConfig.password, {
     host: dbConfig.host,
