@@ -4,7 +4,45 @@ const config = require('config');
 const fs = require('fs');
 const co = require('co');
 const request = require('request');
+const rp = require('request-promise');
 const child_process = require('child_process');
+
+function tellGithub(app, deployment) {
+  return rp({
+    method: 'POST',
+    uri: config.providers.github.endpoint + '/repos/' + app.owner + '/' + app.repo + '/deployments',
+    qs: { access_token: '7a74429b23220f8113df3ea902cc3cbdf40bc02a' },
+    headers: {
+      'User-Agent': 'hercules',
+      'Accept': 'application/vnd.github.ant-man-preview+json'
+    },
+    body: {
+      ref: deployment.ref,
+      environment: 'production'//,
+      // transient_environment: true,
+      // production_environment: true
+    },
+    json: true
+  });
+}
+
+function tellGithubItWorked(deployment, location) {
+  return rp({
+    method: 'POST',
+    uri: deployment.github_status_url,
+    qs: { access_token: '7a74429b23220f8113df3ea902cc3cbdf40bc02a' },
+    headers: {
+      'User-Agent': 'hercules',
+      'Accept': 'application/vnd.github.ant-man-preview+json'
+    },
+    body: {
+      state: 'success',
+      target_url: location,
+      environment_url: location
+    },
+    json: true
+  });
+}
 
 function getCode(app, ref) {
   let url = `${config.providers.github.endpoint}/repos/${app.owner}/${app.repo}/tarball/${ref}`;
@@ -79,12 +117,19 @@ function deploy(deployment, db) {
 
   return co(function* () {
     let app = yield db.App.findById(deployment.AppId);
+    let githubDeployment = yield tellGithub(app, deployment);
+    deployment.github_status_url = githubDeployment.statuses_url;
+
+    yield deployment.save();
+
     let file = yield getCode(app, deployment.ref);
     let dir = yield unpackCode(file);
     let image = yield buildImage(app, deployment, dir);
     let ip = yield runImage(image);
 
     console.log(ip);
+    let resp = yield tellGithubItWorked(deployment, `http://${ip}`);
+    console.log(resp);
   }).catch((err) => {
     console.log(err);
   });

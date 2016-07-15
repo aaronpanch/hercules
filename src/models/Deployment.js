@@ -9,6 +9,10 @@ module.exports = function(sequelize, DataTypes) {
         notEmpty: true
       }
     },
+    github_status_url: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     status: {
       type: DataTypes.ENUM('pending', 'failed', 'success'),
       defaultValue: 'pending',
