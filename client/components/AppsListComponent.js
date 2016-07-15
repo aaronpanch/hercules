@@ -15,8 +15,7 @@ class AppsList extends React.Component {
     super(props);
 
     this.state = {
-      apps: this.props.initialData.apps,
-      appEntities: this.props.initialData.entities,
+      apps: this.props.initialData,
       isLoading: false,
       isAddingApp: false,
       canAddApp: true
@@ -51,11 +50,10 @@ class AppsList extends React.Component {
   }
 
   render() {
-    let items = this.state.apps.map((appID) => {
-      const entity = this.state.appEntities[appID];
+    let items = this.state.apps.map((app) => {
       return (
-        <li key={appID} className="app-list__item">
-          <Application {...entity} />
+        <li key={app.id} className="app-list__item">
+          <Application {...app} />
         </li>
       );
     });

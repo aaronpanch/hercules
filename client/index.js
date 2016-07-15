@@ -1,15 +1,23 @@
 require('./styles/main.scss');
 
+import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './components/Root';
-import Nes from 'nes';
 
-const socketProtocol = window.location.protocol === 'http:' ? 'ws:' : 'wss:';
-let client = new Nes.Client(`${socketProtocol}//${location.host}`);
+function ajax(url) {
+  return fetch(url)
+    .then(response =>
+      response.json().then(json => ({ json, response }))
+    ).then(({ json, response }) => {
+      if (!response.ok) {
+        return Promise.reject(json)
+      }
 
-client.connect(() => {
-  client.request('/apps', function (err, payload) {
-    ReactDOM.render(<Root initialData={payload} client={client} />, document.getElementById('app') );
-  });
+      return json;
+    });
+}
+
+ajax('/apps').then((payload) => {
+  ReactDOM.render(<Root initialData={payload} />, document.getElementById('app') );
 });
