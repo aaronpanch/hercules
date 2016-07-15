@@ -9,7 +9,9 @@ const appsHandler = {
     try {
       let appItem = yield this.db.App.create({
         name: this.request.body.name,
-        description: this.request.body.description
+        description: this.request.body.description,
+        owner: this.request.body.owner,
+        repo: this.request.body.repo
       });
 
       this.body = appItem;

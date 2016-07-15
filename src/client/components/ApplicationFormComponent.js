@@ -28,7 +28,8 @@ class ApplicationForm extends React.Component {
     this.props.createApp({
       name: this.state.appName,
       description: this.state.desc,
-      repo: this.state.owner + '/' + this.state.repo
+      owner: this.state.owner,
+      repo: this.state.repo
     });
   }
 
