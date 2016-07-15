@@ -9,7 +9,7 @@ const deploymentsHandler = {
       AppId: appID
     });
 
-    deploy(deployment, this.db);
+    deploy(deployment, this);
 
     this.body = deployment;
   }

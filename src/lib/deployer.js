@@ -7,11 +7,13 @@ const request = require('request');
 const rp = require('request-promise');
 const child_process = require('child_process');
 
-function tellGithub(app, deployment) {
+function tellGithub(app, deployment, user) {
+  console.log('Creating Github deployment');
+  console.log(user.github_access_token);
   return rp({
     method: 'POST',
     uri: config.providers.github.endpoint + '/repos/' + app.owner + '/' + app.repo + '/deployments',
-    qs: { access_token: '7a74429b23220f8113df3ea902cc3cbdf40bc02a' },
+    qs: { access_token: user.github_access_token },
     headers: {
       'User-Agent': 'hercules',
       'Accept': 'application/vnd.github.ant-man-preview+json'
@@ -26,11 +28,11 @@ function tellGithub(app, deployment) {
   });
 }
 
-function tellGithubItWorked(deployment, location) {
+function tellGithubItWorked(deployment, location, user) {
   return rp({
     method: 'POST',
     uri: deployment.github_status_url,
-    qs: { access_token: '7a74429b23220f8113df3ea902cc3cbdf40bc02a' },
+    qs: { access_token: user.github_access_token },
     headers: {
       'User-Agent': 'hercules',
       'Accept': 'application/vnd.github.ant-man-preview+json'
@@ -44,14 +46,14 @@ function tellGithubItWorked(deployment, location) {
   });
 }
 
-function getCode(app, ref) {
+function getCode(app, ref, user) {
   let url = `${config.providers.github.endpoint}/repos/${app.owner}/${app.repo}/tarball/${ref}`;
   console.log("Downloading Source from " + url);
   let path = 'tmp/source.tar.gz';
   return new Promise((resolve, reject) => {
     request({
       url,
-      qs: { access_token: '7a74429b23220f8113df3ea902cc3cbdf40bc02a' },
+      qs: { access_token: user.github_access_token },
       headers: {
         'User-Agent': 'hercules'
       }
@@ -112,23 +114,23 @@ function runImage(image) {
   });
 }
 
-function deploy(deployment, db) {
+function deploy(deployment, context) {
   console.log("Starting deployment!");
 
   return co(function* () {
-    let app = yield db.App.findById(deployment.AppId);
-    let githubDeployment = yield tellGithub(app, deployment);
+    let app = yield context.db.App.findById(deployment.AppId);
+    let githubDeployment = yield tellGithub(app, deployment, context.state.user);
     deployment.github_status_url = githubDeployment.statuses_url;
 
     yield deployment.save();
 
-    let file = yield getCode(app, deployment.ref);
+    let file = yield getCode(app, deployment.ref, context.state.user);
     let dir = yield unpackCode(file);
     let image = yield buildImage(app, deployment, dir);
     let ip = yield runImage(image);
 
     console.log(ip);
-    let resp = yield tellGithubItWorked(deployment, `http://${ip}`);
+    let resp = yield tellGithubItWorked(deployment, `http://${ip}`, context.state.user);
     console.log(resp);
   }).catch((err) => {
     console.log(err);

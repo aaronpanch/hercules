@@ -17,6 +17,7 @@ const loginHandler = {
 
     yield next;
   },
+
   createSession: function *(next) {
     let access_token = this.query.access_token
     let githubUser = yield request({
