@@ -26,7 +26,7 @@ let grant = new Grant({
   github: config.providers.github
 });
 
-app.keys = ['kittens'];
+app.keys = [config.secret];
 app.use(session(app));
 app.use(mount(grant));
 

@@ -1,5 +1,6 @@
 {
   "port": 3000,
+  "secret": "kittens",
   "server": {
     "protocol": "http",
     "host": "localhost:3000",
