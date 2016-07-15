@@ -4,17 +4,17 @@ const config = require('config');
 
 const logger = require('koa-logger')
     , route = require('koa-route')
+    , send = require('koa-send')
     , session = require('koa-session')
     , mount = require('koa-mount')
     , Grant = require('grant-koa');
 
-const Koa = require('koa');
-let app = new Koa();
+const koa = require('koa');
+let app = koa();
 
 // Development only!
 if (app.env === 'development') {
   app.use(logger());
-  app.use(require('koa-static')('public'));
   app.use(require('koa-webpack-dev')({
     config: './webpack.config.js'
   }));
@@ -36,9 +36,14 @@ app.context.db = models;
 
 // Routes
 const apps = require('./src/handlers/apps');
-const login = require('./src/handlers/login').login;
+const login = require('./src/handlers/login');
+
+app.use(route.get('/login', login.createSession));
+
+app.use(login.checkSession);
+app.use(route.get('/', function *() { yield send(this, 'src/views/index.html'); }));
 app.use(route.get('/apps', apps.list));
-app.use(route.get('/login', login));
+
 
 // Start App (unless testing)
 if (app.env !== 'test') {

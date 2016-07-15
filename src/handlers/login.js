@@ -4,7 +4,16 @@ const config = require('config');
 const request = require('request-promise');
 
 const loginHandler = {
-  login: function *(next) {
+  checkSession: function *(next) {
+    if (!this.session.userID) {
+      this.redirect('/connect/github');
+    } else {
+      this.state.user = yield this.db.User.findById(this.session.userID)
+    }
+
+    yield next;
+  },
+  createSession: function *(next) {
     let access_token = this.query.access_token
     let githubUser = yield request({
       uri: config.providers.github.endpoint + '/user',
@@ -15,7 +24,7 @@ const loginHandler = {
       json: true
     });
 
-    this.db.User.findOrCreate({
+    let user = yield this.db.User.findOrCreate({
       where: { github_id: githubUser.id },
       defaults: {
         name: githubUser.name,
@@ -25,6 +34,8 @@ const loginHandler = {
         github_access_token: access_token
       }
     });
+
+    this.session.userID = user[0].id;
 
     this.redirect('/');
   }

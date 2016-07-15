@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import Root from './components/Root';
 
 function ajax(url) {
-  return fetch(url)
+  return fetch(url, { credentials: 'same-origin' })
     .then(response =>
       response.json().then(json => ({ json, response }))
     ).then(({ json, response }) => {
