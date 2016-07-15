@@ -68,7 +68,7 @@ class Application extends React.Component {
           </table>
 
           <div style={{marginTop: '1rem', textAlign: 'right'}}>
-            <button className="button button--secondary" onClick={() => { this.props.showMenu(<DeploymentForm cancel={this.props.cancelMenu}/>) }}>create deployment</button>
+            <button className="button button--secondary" onClick={() => { this.props.showMenu(<DeploymentForm appID={this.props.id} cancel={this.props.cancelMenu}/>) }}>create deployment</button>
           </div>
         </div>
       );

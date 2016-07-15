@@ -39,6 +39,7 @@ app.context.db = models;
 
 // Routes
 const apps = require('./src/handlers/apps');
+const deployments = require('./src/handlers/deployments');
 const environments = require('./src/handlers/environments');
 const login = require('./src/handlers/login');
 
@@ -50,6 +51,7 @@ app.use(route.get('/apps', apps.list));
 app.use(route.post('/apps', apps.create));
 app.use(route.get('/apps/:appID', apps.show));
 app.use(route.get('/apps/:appID/environments', environments.list));
+app.use(route.post('/apps/:appID/createDeployment', deployments.create))
 
 // Start App (unless testing)
 if (app.env !== 'test') {
