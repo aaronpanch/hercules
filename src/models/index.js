@@ -2,9 +2,9 @@
 
 const fs   = require("fs");
 const path = require("path");
-const Sequelize = require('sequelize');
-const sequelize = require('../database')();
+const database = require('../database');
 
+let sequelize = database.connect();
 let db = {};
 
 fs
@@ -23,7 +23,7 @@ Object.keys(db).forEach(function(modelName) {
   }
 });
 
+db.Sequelize = database.Sequelize;
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
 
 module.exports = db;

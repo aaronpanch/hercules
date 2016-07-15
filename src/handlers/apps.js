@@ -1,8 +1,10 @@
+const co = require('co');
+
 const appsHandler = {
-  list: function *(next) {
+  list: co.wrap(function *(ctx) {
     let apps = yield this.db.App.findAll();
-    this.body = apps;
-  }
+    ctx.body = apps;
+  })
 }
 
 module.exports = appsHandler;

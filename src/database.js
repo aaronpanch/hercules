@@ -1,10 +1,15 @@
+const dbConfig = require('config').get('db');
 const Sequelize = require('sequelize');
 
+const cls = require('continuation-local-storage');
+Sequelize.cls = cls.createNamespace('testNamespace');
+
 function connect() {
-  return new Sequelize('hercules_dev', null, null, {
-    host: 'localhost',
+  return new Sequelize(dbConfig.name, dbConfig.username, dbConfig.password, {
+    host: dbConfig.host,
     dialect: 'postgres',
-    port: 5432,
+    port: dbConfig.port,
+    logging: dbConfig.logging === undefined ? console.log : dbConfig.logging,
 
     pool: {
       max: 10,
@@ -14,4 +19,4 @@ function connect() {
   });
 }
 
-module.exports = connect;
+module.exports = { Sequelize, connect };
