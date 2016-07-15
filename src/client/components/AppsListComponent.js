@@ -44,16 +44,18 @@ class AppsList extends React.Component {
   }
 
   selectApp(id) {
-    this.setState({ canAddApp: false, animatedApp: id });
-    let item = this.refs[id];
-    item.style.left = 0;
-    item.style.top = item.offsetTop + 'px';
-    setTimeout(() => {
-      item.style.position = 'absolute';
-      item.style.top = '0';
-      this.props.selectApp(id);
-      this.setState({ animatedApp: null });
-    }, 300);
+    return () => {
+      this.setState({ canAddApp: false, animatedApp: id });
+      let item = this.refs[id];
+      item.style.left = 0;
+      item.style.top = item.offsetTop + 'px';
+      setTimeout(() => {
+        item.style.position = 'absolute';
+        item.style.top = '0';
+        this.props.selectApp(id);
+        this.setState({ animatedApp: null, selectedApp: id });
+      }, 300);
+    }
   }
 
   showForm(state) {
@@ -66,8 +68,8 @@ class AppsList extends React.Component {
         'app-list__item',
         {'fade-out': this.state.animatedApp && app.id !== this.state.animatedApp })
       return (
-        <li key={app.id} className={classes} ref={app.id}>
-          <Application {...app} />
+        <li key={app.id} className={classes} ref={app.id} onClick={this.selectApp(app.id).bind(this)}>
+          <Application {...app} selected={app.id === this.state.selectedApp} />
         </li>
       );
     });
