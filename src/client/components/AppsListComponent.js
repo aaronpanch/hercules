@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import merge from 'lodash/merge';
-import union from 'lodash/union';
+import classNames from 'classnames';
+import ajax from '../ajax';
 
 require('../styles/app-list.scss');
 require('../styles/button.scss');
@@ -9,14 +9,13 @@ require('../styles/utilities.scss');
 
 import Application from './ApplicationComponent';
 import ApplicationForm from './ApplicationFormComponent';
+import AppDetail from './AppDetailComponent';
 
 class AppsList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      apps: this.props.initialData.apps,
-      appEntities: this.props.initialData.entities,
       isLoading: false,
       isAddingApp: false,
       canAddApp: true
@@ -25,25 +24,39 @@ class AppsList extends React.Component {
 
   createApp(app) {
     this.setState({ isLoading: true });
-    this.props.client.request({
-      path: '/apps',
+    ajax('/apps', {
       method: 'POST',
-      payload: app
-    }, (err, payload) => {
-      let newState = {
-        isLoading: false
-      }
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(app)
+    }).then((app) => {
+      this.setState({
+        isLoading: false,
+        isAddingApp: false
+      });
 
-      if (!err) {
-        const { app } = payload;
-        newState.isAddingApp = false;
-        newState.appEntities = merge({ [app._id]: app }, this.state.appEntities);
-        newState.apps = union(this.state.apps, [app._id]);
-        setTimeout(() => { this.setState({ canAddApp: true }) }, 200);
-      }
+      this.props.addApp(app);
+      setTimeout(() => { this.setState({ canAddApp: true }) }, 200);
 
-      this.setState(newState);
+    }).catch((err) => {
+      this.setState({ isLoading: false });
     });
+  }
+
+  selectApp(id) {
+    return () => {
+      this.setState({ canAddApp: false, animatedApp: id });
+      let item = this.refs[id];
+      item.style.left = 0;
+      item.style.top = item.offsetTop + 'px';
+      setTimeout(() => {
+        item.style.position = 'absolute';
+        item.style.top = '0';
+        this.props.selectApp(id);
+        this.setState({ animatedApp: null, selectedApp: id });
+      }, 300);
+    }
   }
 
   showForm(state) {
@@ -51,11 +64,21 @@ class AppsList extends React.Component {
   }
 
   render() {
-    let items = this.state.apps.map((appID) => {
-      const entity = this.state.appEntities[appID];
+    let items = this.props.apps.map((app) => {
+      let classes = classNames(
+        'app-list__item',
+        {'fade-out': this.state.animatedApp && app.id !== this.state.animatedApp })
+
+      let contents = null;
+      if (app.id === this.state.selectedApp) {
+        contents = <AppDetail {...app} />
+      } else {
+        contents = <Application {...app} selected={false} />
+      }
+
       return (
-        <li key={appID} className="app-list__item">
-          <Application {...entity} />
+        <li key={app.id} className={classes} ref={app.id} onClick={this.selectApp(app.id).bind(this)}>
+          { contents }
         </li>
       );
     });
@@ -96,6 +119,7 @@ class AppsList extends React.Component {
         transitionAppear={true}
         transitionAppearTimeout={325 + items.length * 100}
         transitionEnterTimeout={175}
+        transitionLeave={!this.state.animatedApp}
         transitionLeaveTimeout={175}>
           {items}
       </ReactCSSTransitionGroup>
