@@ -1,0 +1,10 @@
+{
+  "secret": "APP_SECRET",
+  "slackToken": "SLACK_TOKEN",
+  "providers": {
+    "github": {
+      "key": "GITHUB_CLIENT_ID",
+      "secret": "GITHUB_CLIENT_SECRET"
+    }
+  }
+}
