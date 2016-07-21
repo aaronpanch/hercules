@@ -2,8 +2,7 @@
 
 const config = require('config');
 
-const logger = require('koa-logger')
-    , bodyParser = require('koa-bodyparser')
+const bodyParser = require('koa-bodyparser')
     , route = require('koa-route')
     , send = require('koa-send')
     , session = require('koa-session')
@@ -15,7 +14,7 @@ let app = koa();
 
 // Development only!
 if (app.env === 'development') {
-  app.use(logger());
+  app.use(require('koa-logger')());
   app.use(require('koa-webpack-dev')({
     config: './webpack.config.js'
   }));
