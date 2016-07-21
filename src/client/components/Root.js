@@ -4,6 +4,8 @@ import AppsList from './AppsListComponent';
 import union from 'lodash/union';
 import find from 'lodash/find';
 
+import '../styles/base.scss';
+
 class Root extends React.Component {
   constructor(props) {
     super(props);
