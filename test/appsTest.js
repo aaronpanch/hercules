@@ -4,9 +4,9 @@ require('./integrationHelper');
 
 describe('Apps Resource', () => {
   it('should list apps', (done) => {
-    Models.App.create({ name: 'test', description: 'desc' });
+    db.App.create({ name: 'test', description: 'desc', owner: 'foo', repo: 'bar' });
 
-    request(App)
+    request(application)
       .get('/apps')
       .expect(200)
       .expect('Content-Type', /json/)
