@@ -2,21 +2,22 @@
 
 const config = require('config');
 const request = require('request-promise');
+const passport = require('koa-passport');
 const User = require('../models').User;
 
 const authHandler = {
-  checkSession: function *(next) {
-    if (!this.session.userID) {
-      if (this.request.get('X-Requested-With') === 'XMLHttpRequest') {
-        this.status = 401;
+  checkToken: function *(next) {
+    let self = this;
+    yield passport.authenticate('jwt', function *(err, user, info) {
+      if (err) throw err;
+      if (user === false) {
+        self.status = 401;
+        self.body = { error: 'Unauthorized' };
       } else {
-        this.redirect('/connect/github');
+        yield self.login(user, { session: false });
+        yield next;
       }
-    } else {
-      this.state.user = yield User.findById(this.session.userID)
-    }
-
-    yield next;
+    }).call(this, next);
   },
 
   createSession: function *(next) {

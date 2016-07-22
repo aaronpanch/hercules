@@ -35,10 +35,12 @@ const environments = require('./src/handlers/environments');
 const auth = require('./src/handlers/auth');
 const slack = require('./src/handlers/slack');
 
+// Public Routes
 app.use(route.get('/login', auth.createSession));
 app.use(route.post('/slack', slack.deploy));
 
-app.use(passport.authenticate('jwt', { session: false }));
+// Protected Routes
+app.use(auth.checkToken);
 app.use(route.get('/apps', apps.list));
 app.use(route.post('/apps', apps.create));
 app.use(route.get('/apps/:appID', apps.show));
