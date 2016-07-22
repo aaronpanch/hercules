@@ -14,10 +14,10 @@ let app = koa();
 // Development only!
 if (app.env === 'development') {
   app.use(require('koa-logger')());
-  app.use(require('koa-static')('public'));
   app.use(require('koa-webpack-dev')({
     config: './webpack.config.js'
   }));
+  app.use(require('koa-static')('public'));
 }
 
 app.use(bodyParser());

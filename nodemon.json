@@ -1,3 +1,3 @@
 {
-  "ignore": ["test/*", "client/*", "public/*", "tmp/*"]
+  "ignore": ["test/*", "client/*", "public/*", "tmp/*", "webpack.prod.*"]
 }
