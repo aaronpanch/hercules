@@ -1,10 +1,11 @@
 "use strict";
 
+const Deployment = require('../models').Deployment;
 const deploy = require('../lib/deployer');
 
 const deploymentsHandler = {
   create: function *(appID) {
-    let deployment = yield this.db.Deployment.create({
+    let deployment = yield Deployment.create({
       ref: this.request.body.ref,
       AppId: appID
     });

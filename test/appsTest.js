@@ -2,9 +2,11 @@
 
 require('./integrationHelper');
 
+const App = require('../src/models').App;
+
 describe('Apps Resource', () => {
   it('should list apps', (done) => {
-    db.App.create({ name: 'test', description: 'desc', owner: 'foo', repo: 'bar' });
+    App.create({ name: 'test', description: 'desc', owner: 'foo', repo: 'bar' });
 
     request(application)
       .get('/apps')

@@ -1,9 +1,11 @@
 "use strict";
 
+const { App, Environment } = require('../models');
+
 const environmentsHandler = {
   list: function *(appID) {
-    let app = yield this.db.App.findById(appID, {
-      include: [ this.db.Environment ]
+    let app = yield App.findById(appID, {
+      include: [ Environment ]
     });
 
     this.body = app.Environments;

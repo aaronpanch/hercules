@@ -2,6 +2,7 @@
 
 const config = require('config');
 const request = require('request-promise');
+const User = require('../models').User;
 
 const loginHandler = {
   checkSession: function *(next) {
@@ -12,7 +13,7 @@ const loginHandler = {
         this.redirect('/connect/github');
       }
     } else {
-      this.state.user = yield this.db.User.findById(this.session.userID)
+      this.state.user = yield User.findById(this.session.userID)
     }
 
     yield next;
@@ -29,7 +30,7 @@ const loginHandler = {
       json: true
     });
 
-    let user = yield this.db.User.findOrCreate({
+    let user = yield User.findOrCreate({
       where: { github_id: githubUser.id },
       defaults: {
         name: githubUser.name,
