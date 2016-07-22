@@ -1,20 +1,22 @@
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/index.js',
+  entry: './src/client/index.js',
   output: {
     path: 'public',
-    filename: 'bundle.js'
+    filename: 'assets/app.js'
   },
   module: {
     loaders: [
       {
         test: /\.css$/,
-        loaders: ['style', 'css']
+        loader: ExtractTextPlugin.extract('style', 'css')
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        loader: ExtractTextPlugin.extract('style', 'css!sass')
       },
       {
         test: /\.js$/,
@@ -24,10 +26,16 @@ module.exports = {
     ]
   },
   plugins:[
-    new webpack.DefinePlugin({
-      'process.env':{
-        'NODE_ENV': JSON.stringify('production')
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV'
+    ]),
+    new ExtractTextPlugin('assets/styles.css'),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true
       }
-    }),
+    })
   ]
 }

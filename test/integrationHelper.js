@@ -1,18 +1,15 @@
 'use strict';
 
+const co = require('co');
 require('./helper');
 
 global.request = require('supertest');
 
-const application = require('../app');
+const appDef = require('../app');
 
-global.App = application.app.callback();
-global.Models = application.models;
+global.application = appDef.app.callback();
+global.db = appDef.models;
 
-before(() => {
-  return Models.sequelize.sync();
+beforeEach(() => {
+  return db.sequelize.sync({ force: true });
 });
-
-after(() => {
-  return Models.App.destroy({ truncate: true });
-})

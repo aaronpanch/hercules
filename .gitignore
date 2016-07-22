@@ -6,6 +6,7 @@ logs
 pids
 *.pid
 *.seed
+*.lock
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
@@ -13,4 +14,6 @@ node_modules
 
 tmp
 
-public/bundle.js
+public/index.html
+public/assets/*.js
+public/assets/*.css
