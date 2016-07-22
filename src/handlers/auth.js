@@ -4,7 +4,7 @@ const config = require('config');
 const request = require('request-promise');
 const User = require('../models').User;
 
-const loginHandler = {
+const authHandler = {
   checkSession: function *(next) {
     if (!this.session.userID) {
       if (this.request.get('X-Requested-With') === 'XMLHttpRequest') {
@@ -47,4 +47,4 @@ const loginHandler = {
   }
 }
 
-module.exports = loginHandler;
+module.exports = authHandler;

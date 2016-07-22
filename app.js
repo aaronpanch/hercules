@@ -32,10 +32,10 @@ app.use(passport.initialize());
 const apps = require('./src/handlers/apps');
 const deployments = require('./src/handlers/deployments');
 const environments = require('./src/handlers/environments');
-const login = require('./src/handlers/login');
+const auth = require('./src/handlers/auth');
 const slack = require('./src/handlers/slack');
 
-app.use(route.get('/login', login.createSession));
+app.use(route.get('/login', auth.createSession));
 app.use(route.post('/slack', slack.deploy));
 
 app.use(passport.authenticate('jwt', { session: false }));
