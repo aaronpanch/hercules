@@ -1,29 +1,35 @@
-require('./styles/main.scss');
-
 import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Root from './components/Root';
-import qs from 'qs';
-import ajax from './ajax';
 import decode from 'jwt-decode';
+import qs from 'qs';
+
+import './styles/main.scss';
+import Root from './components/Root';
+import ajax from './ajax';
 
 const query = qs.parse(window.location.search.substring(1));
+let token;
+
 if (query.token) {
   localStorage.setItem('herculesToken', query.token);
+  token = query.token;
   history.replaceState({}, null, '/');
+} else {
+  token = localStorage.getItem('herculesToken');
 }
 
-let token = localStorage.getItem('herculesToken');
+function loginGithub() {
+  window.location = '/connect/github';
+}
 
 try {
   const payload = decode(token);
-
   if (!(payload.exp > Date.now() / 1000)) {
-    window.location = '/connect/github';
+    loginGithub()
   }
 } catch (e) {
-  window.location = '/connect/github';
+  loginGithub();
 }
 
 ajax('/apps').then((apps) => {
