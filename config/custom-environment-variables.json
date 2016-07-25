@@ -1,10 +1,12 @@
 {
+  "port": "PORT",
+  "hostURL": "HOST_URL",
   "secret": "APP_SECRET",
   "slackToken": "SLACK_TOKEN",
   "providers": {
     "github": {
-      "key": "GITHUB_CLIENT_ID",
-      "secret": "GITHUB_CLIENT_SECRET"
+      "clientID": "GITHUB_CLIENT_ID",
+      "clientSecret": "GITHUB_CLIENT_SECRET"
     }
   }
 }

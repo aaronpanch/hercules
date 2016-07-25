@@ -1,5 +1,13 @@
-export default function ajax(url, opts = {}) {
-  const options = Object.assign({}, { credentials: 'same-origin' }, opts);
+export default function ajax(url, opts) {
+  let defaultOptions = {};
+
+  if (localStorage.getItem('herculesToken')) {
+    defaultOptions.headers = {
+      Authorization: `JWT ${localStorage.getItem('herculesToken')}`
+    }
+  }
+
+  const options = Object.assign({}, defaultOptions, opts);
 
   return fetch(url, options)
     .then(response =>

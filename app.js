@@ -36,8 +36,11 @@ const auth = require('./src/handlers/auth');
 const slack = require('./src/handlers/slack');
 
 // Public Routes
-app.use(route.get('/login', auth.createSession));
 app.use(route.post('/slack', slack.deploy));
+
+app.use(route.get('/connect/github',
+  passport.authenticate('github', { scope: config.providers.github.scope })));
+app.use(route.get(config.providers.github.callbackPath, auth.createToken));
 
 // Protected Routes
 app.use(auth.checkToken);

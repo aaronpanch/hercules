@@ -9,7 +9,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack -p --optimize-minimize --optimize-dedupe --optimize-occurrence-order --config ./webpack.prod.config.js",
     "test": "NODE_ENV=test mocha --reporter spec 'test/**/*.js'",
-    "start": "nodemon app.js"
+    "start": "nodemon -r dotenv/config app.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,8 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "grant-koa": "^3.6.2",
     "html-webpack-plugin": "^2.22.0",
+    "jsonwebtoken": "^7.1.6",
+    "jwt-decode": "^2.1.0",
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.2.0",
     "koa-mount": "^1.3.0",
@@ -42,9 +44,11 @@
     "koa-session": "^3.3.1",
     "lodash": "^4.13.1",
     "node-sass": "^3.7.0",
+    "passport-github2": "^0.1.10",
     "passport-jwt": "^2.1.0",
     "pg": "^6.0.2",
     "pg-hstore": "^2.3.2",
+    "qs": "^6.2.1",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-dom": "^15.1.0",
@@ -58,6 +62,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "dotenv": "^2.0.0",
     "koa-logger": "^1.3.0",
     "koa-static": "^2.0.0",
     "koa-webpack-dev": "^1.0.3",
