@@ -1,10 +1,8 @@
 "use strict";
 
-const config = require('config');
-
 const request = require('request-promise')
     , passport = require('koa-passport')
-    , jwt = require('jsonwebtoken');
+    , generateToken = require('../lib/generateToken');
 
 const User = require('../models').User;
 
@@ -27,10 +25,8 @@ const authHandler = {
     let self = this;
     yield passport.authenticate('github', function *(err, user, info) {
       if (err) throw err;
-      const token = jwt.sign({ userID: user.id, name: user.name }, config.secret, {
-        expiresIn: '1d'
-      });
 
+      const token = generateToken({ userID: user.id, name: user.name });
       self.redirect(`/?token=${token}`);
     }).call(this, next);
   }
