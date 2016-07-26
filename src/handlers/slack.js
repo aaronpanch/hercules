@@ -2,6 +2,8 @@
 const config = require('config');
 const deploy = require('../lib/deployer');
 
+const { App, Deployment, User } = require('../models');
+
 function parseDeploy (message) {
   const deployPattern = /([-\.\w]+)(?:\/([^\s]+))?(?:\s+(?:to|in|on))\s+([-\.\w]+)/
       , commandParts = message.trim().match(deployPattern);
@@ -64,20 +66,20 @@ const slackHandler = {
       return;
     }
 
-    let app = yield this.db.App.findOne({ where: { name: deployCommand.appName } });
+    let app = yield App.findOne({ where: { name: deployCommand.appName } });
     if (app) {
       this.body = {
         response_type: 'in_channel',
         text: `You got it ${payload.user_name}! I'll get started on that now.`
       }
 
-      let deployment = yield this.db.Deployment.create({
+      let deployment = yield Deployment.create({
         ref: deployCommand.branch,
         AppId: app.id
       });
 
       // NEED TO GET THE REAL USER
-      this.state.user = yield this.db.User.findById(2);
+      this.state.user = yield User.findById(2);
 
       deploy(deployment, this);
     } else {

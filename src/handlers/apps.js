@@ -1,13 +1,15 @@
 "use strict";
 
+const App = require('../models').App;
+
 const appsHandler = {
   list: function *() {
-    let apps = yield this.db.App.findAll();
+    let apps = yield App.findAll();
     this.body = apps;
   },
   create: function *() {
     try {
-      let appItem = yield this.db.App.create({
+      let appItem = yield App.create({
         name: this.request.body.name,
         description: this.request.body.description,
         owner: this.request.body.owner,
@@ -20,7 +22,7 @@ const appsHandler = {
     }
   },
   show: function *(appID) {
-    let app = yield this.db.App.findById(appID);
+    let app = yield App.findById(appID);
     this.body = app;
   }
 }
