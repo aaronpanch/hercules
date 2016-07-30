@@ -16,13 +16,14 @@ const appsHandler = {
         repo: this.request.body.repo
       });
 
+      this.status = 201;
       this.body = appItem;
     } catch (err) {
       this.status = 400;
     }
   },
-  show: function *(appID) {
-    let app = yield App.findById(appID);
+  show: function *(id) {
+    let app = yield App.findById(id);
     this.body = app;
   }
 }

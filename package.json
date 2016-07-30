@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "NODE_ENV=production webpack -p --optimize-minimize --optimize-dedupe --optimize-occurrence-order --config ./webpack.prod.config.js",
-    "test": "NODE_ENV=test mocha --reporter spec 'test/**/*.js'",
+    "test": "NODE_ENV=test nyc --reporter text --reporter=lcov mocha --reporter spec 'test/**/*.js'",
     "start": "nodemon -r dotenv/config app.js"
   },
   "repository": {
@@ -65,6 +65,13 @@
     "koa-webpack-dev": "^1.0.3",
     "mocha": "^2.5.3",
     "nodemon": "^1.9.2",
+    "nyc": "^7.1.0",
     "supertest": "^1.2.0"
+  },
+  "nyc": {
+    "exclude": [
+      "test/*.js",
+      "webpack.*config.js"
+    ]
   }
 }

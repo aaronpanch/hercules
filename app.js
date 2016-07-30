@@ -46,7 +46,7 @@ app.use(route.get(config.providers.github.callbackPath, auth.createToken));
 app.use(auth.checkToken);
 app.use(route.get('/apps', apps.list));
 app.use(route.post('/apps', apps.create));
-app.use(route.get('/apps/:appID', apps.show));
+app.use(route.get('/apps/:id', apps.show));
 app.use(route.get('/apps/:appID/environments', environments.list));
 app.use(route.post('/apps/:appID/createDeployment', deployments.create));
 
