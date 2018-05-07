@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Deploy applications with strength!",
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage",
+    "lint": "eslint src"
   },
   "repository": "https://github.com/aaronpanch/hercules.git",
   "author": "Aaron Panchal",
