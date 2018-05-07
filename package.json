@@ -2,7 +2,9 @@
   "name": "hercules",
   "version": "0.1.0",
   "description": "Deploy applications with strength!",
-  "scripts": {},
+  "scripts": {
+    "test": "jest"
+  },
   "repository": "https://github.com/aaronpanch/hercules.git",
   "author": "Aaron Panchal",
   "bugs": {
