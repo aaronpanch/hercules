@@ -2,76 +2,14 @@
   "name": "hercules",
   "version": "0.1.0",
   "description": "Deploy applications with strength!",
-  "main": "server.js",
-  "engines": {
-    "node": "6.2.0"
-  },
-  "scripts": {
-    "build": "NODE_ENV=production webpack -p --optimize-minimize --optimize-dedupe --optimize-occurrence-order --config ./webpack.prod.config.js",
-    "test": "NODE_ENV=test nyc --reporter text --reporter=lcov mocha --reporter spec 'test/**/*.js'",
-    "start": "nodemon -r dotenv/config app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/aaronpanch/hercules.git"
-  },
+  "scripts": {},
+  "repository": "https://github.com/aaronpanch/hercules.git",
   "author": "Aaron Panchal",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/aaronpanch/hercules/issues"
   },
   "homepage": "https://github.com/aaronpanch/hercules",
-  "dependencies": {
-    "babel-core": "^6.9.1",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-transform-object-rest-spread": "^6.8.0",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.5.0",
-    "classnames": "^2.2.5",
-    "co": "^4.6.0",
-    "config": "^1.21.0",
-    "css-loader": "^0.23.1",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "html-webpack-plugin": "^2.22.0",
-    "jsonwebtoken": "^7.1.6",
-    "jwt-decode": "^2.1.0",
-    "koa": "^1.2.0",
-    "koa-bodyparser": "^2.2.0",
-    "koa-passport": "^1.3.1",
-    "koa-route": "^2.4.2",
-    "lodash": "^4.13.1",
-    "node-sass": "^3.7.0",
-    "passport-github2": "^0.1.10",
-    "passport-jwt": "^2.1.0",
-    "pg": "^6.0.2",
-    "pg-hstore": "^2.3.2",
-    "qs": "^6.2.1",
-    "react": "^15.1.0",
-    "react-addons-css-transition-group": "^15.1.0",
-    "react-dom": "^15.1.0",
-    "request": "^2.73.0",
-    "request-promise": "^3.0.0",
-    "sass-loader": "^3.2.0",
-    "sequelize": "^3.23.4",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.13.1",
-    "whatwg-fetch": "^1.0.0"
-  },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "dotenv": "^2.0.0",
-    "koa-logger": "^1.3.0",
-    "koa-static": "^2.0.0",
-    "koa-webpack-dev": "^1.0.3",
-    "mocha": "^2.5.3",
-    "nodemon": "^1.9.2",
-    "nyc": "^7.1.0",
-    "supertest": "^1.2.0"
-  },
-  "nyc": {
-    "exclude": [
-      "test/*.js",
-      "webpack.*config.js"
-    ]
-  }
+  "dependencies": {},
+  "devDependencies": {},
+  "private": true
 }
