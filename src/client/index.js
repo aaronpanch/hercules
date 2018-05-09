@@ -26,12 +26,19 @@ function loginGithub() {
 try {
   const payload = decode(token);
   if (!(payload.exp > Date.now() / 1000)) {
-    loginGithub()
+    loginGithub();
   }
 } catch (e) {
-  loginGithub();
+  // loginGithub();
 }
 
-ajax('/apps').then((apps) => {
-  ReactDOM.render(<Root initialData={apps} />, document.getElementById('app') );
-});
+// ajax('/apps').then(apps => {
+const apps = [
+  {
+    id: 1,
+    name: 'hercules',
+    description: 'Deploy applications with strength!',
+  },
+];
+ReactDOM.render(<Root initialData={apps} />, document.getElementById('app'));
+// });
