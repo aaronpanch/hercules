@@ -32,6 +32,13 @@ try {
   // loginGithub();
 }
 
-ajax('/apps').then(apps => {
-  ReactDOM.render(<Root initialData={apps} />, document.getElementById('app'));
-});
+// ajax('/apps').then(apps => {
+const apps = [
+  {
+    id: 1,
+    name: 'hercules',
+    description: 'Deploy applications with strength!',
+  },
+];
+ReactDOM.render(<Root initialData={apps} />, document.getElementById('app'));
+// });
