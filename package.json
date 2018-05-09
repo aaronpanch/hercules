@@ -4,7 +4,9 @@
   "description": "Deploy applications with strength!",
   "scripts": {
     "test": "jest --coverage",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "start": "NODE_ENV=development webpack-dev-server --hot --open",
+    "build": "NODE_ENV=production webpack"
   },
   "repository": "https://github.com/aaronpanch/hercules.git",
   "author": "Aaron Panchal",
@@ -15,8 +17,11 @@
   "dependencies": {
     "bootstrap": "^4.1.0",
     "classnames": "^2.2.5",
+    "jwt-decode": "^2.2.0",
+    "prop-types": "^15.6.1",
     "query-string": "^6.0.0",
     "react": "^16.3.2",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.3.2",
     "react-router-dom": "^4.2.2"

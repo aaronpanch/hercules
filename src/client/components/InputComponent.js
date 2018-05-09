@@ -1,6 +1,5 @@
-'use strict';
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 require('../styles/Input.scss');
@@ -10,8 +9,8 @@ class InputComponent extends React.Component {
     super(props);
 
     this.state = {
-      hasText: this.isPresent(props.value)
-    }
+      hasText: this.isPresent(props.value),
+    };
   }
 
   componentWillReceiveProps(newProps) {
@@ -21,7 +20,7 @@ class InputComponent extends React.Component {
   }
 
   isPresent(value = '') {
-    return value.length > 0
+    return value.length > 0;
   }
 
   setHasText(hasText) {
@@ -29,12 +28,14 @@ class InputComponent extends React.Component {
   }
 
   render() {
-    const { className, onFocus, onBlur, label, ...other } = this.props;
+    const {
+      className, onFocus, onBlur, label, ...other
+    } = this.props;
     const inputClasses = classNames(
       'input-component',
       { 'has-text': this.state.hasText },
       { 'input-component--disabled': this.props.disabled },
-      className
+      className,
     );
     return (
       <div className={inputClasses}>
@@ -42,8 +43,12 @@ class InputComponent extends React.Component {
         <input
           ref="inputNode"
           className="input-component__input"
-          onFocus={() => {this.setHasText(true)}}
-          onBlur={event => {this.setHasText(event.target.value.length > 0)}}
+          onFocus={() => {
+            this.setHasText(true);
+          }}
+          onBlur={event => {
+            this.setHasText(event.target.value.length > 0);
+          }}
           {...other}
         />
       </div>
@@ -54,12 +59,12 @@ class InputComponent extends React.Component {
 InputComponent.displayName = 'Input';
 
 InputComponent.propTypes = {
-  label: React.PropTypes.string.isRequired,
-  type: React.PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 InputComponent.defaultProps = {
-  type: 'text'
+  type: 'text',
 };
 
 export default InputComponent;
